@@ -4,7 +4,11 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
-    // Add options here
+    ace: {
+      themes: ['ambiance', 'chaos', 'tomorrow_night_eighties'],
+      modes: ['javascript'],
+      workers: ['javascript']
+    }
   });
 
   /*

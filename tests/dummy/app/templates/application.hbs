@@ -1,0 +1,93 @@
+<style>.editor-error { background-color: rgba(255, 0, 0, 0.5); position: absolute; }</style>
+
+{{ember-ace
+  lines=10
+  value=value
+  highlightActiveLine=highlightActiveLine
+  showPrintMargin=showPrintMargin
+  readOnly=readOnly
+  tabSize=tabSize
+  useSoftTabs=useSoftTabs
+  useWrapMode=useWrapMode
+  showInvisibles=showInvisibles
+  theme=theme
+  markers=markers
+  annotations=annotations
+  update=(action (mut value))
+}}
+
+<pre>{{value}}</pre>
+
+<label>
+  <input
+    type="checkbox"
+    checked={{highlightActiveLine}}
+    onchange={{action (mut highlightActiveLine) value='target.checked'}}
+  >
+  highlightActiveLine
+</label>
+
+<label>
+  <input
+    type="checkbox"
+    checked={{showPrintMargin}}
+    onchange={{action (mut showPrintMargin) value='target.checked'}}
+  >
+  showPrintMargin
+</label>
+
+<label>
+  <input
+    type="checkbox"
+    checked={{readOnly}}
+    onchange={{action (mut readOnly) value='target.checked'}}
+  >
+  readOnly
+</label>
+
+<label>
+  <input
+    type="checkbox"
+    checked={{useSoftTabs}}
+    onchange={{action (mut useSoftTabs) value='target.checked'}}
+  >
+  useSoftTabs
+</label>
+
+
+<label>
+  <input
+    type="checkbox"
+    checked={{useWrapMode}}
+    onchange={{action (mut useWrapMode) value='target.checked'}}
+  >
+  useWrapMode
+</label>
+
+
+<label>
+  <input
+    type="checkbox"
+    checked={{showInvisibles}}
+    onchange={{action (mut showInvisibles) value='target.checked'}}
+  >
+  showInvisibles
+</label>
+
+<label>
+  <select onchange={{action (mut theme) value='target.value'}}>
+    {{#each themes as |theme|}}
+      <option value={{theme}}>{{theme}}</option>
+    {{/each}}
+  </select>
+  theme
+</label>
+
+<label>
+  <input
+    type="number"
+    value={{tabSize}}
+    onchange={{action (mut tabSize) value='target.value'}}
+  >
+  tabSize
+</label>
