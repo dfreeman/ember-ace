@@ -1,26 +1,41 @@
-# Ember-ace
+# Ember Ace
 
-This README outlines the details of collaborating on this Ember addon.
+An Ember component wrapping [Ace editor](https://ace.c9.io).
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```bash
+ember install ember-ace
+```
 
-## Running
+## Usage
 
-* `ember serve`
-* Visit your app at http://localhost:4200.
+```hbs
+{{ember-ace lines=10 value=value update=(action 'valueUpdated')}}
+```
 
-## Running Tests
+### Options
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+value
+update
+ready
 
-## Building
+mode
+theme
+useSoftTabs
+tabSize
+useWrapMode
+highlightActiveLine
+showPrintMargin
+printMarginColumn
+showInvisibles
+readOnly
 
-* `ember build`
+lines
+minLines
+maxLines
 
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+markers
+annotations
+
+### Build Configuration
