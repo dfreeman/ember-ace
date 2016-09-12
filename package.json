@@ -1,7 +1,7 @@
 {
   "name": "ember-ace",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "An Ember addon for the Ace code editor",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,11 +11,11 @@
     "start": "ember server",
     "test": "ember try:each"
   },
-  "repository": "",
+  "repository": "dfreeman/ember-ace",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Dan Freeman",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
