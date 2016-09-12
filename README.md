@@ -1,4 +1,4 @@
-# Ember Ace
+# Ember Ace [![Build Status](https://travis-ci.org/dfreeman/ember-ace.svg?branch=master)](https://travis-ci.org/dfreeman/ember-ace)
 
 An Ember component wrapping [Ace editor](https://ace.c9.io).
 
