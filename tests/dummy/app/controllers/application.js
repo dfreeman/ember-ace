@@ -16,7 +16,6 @@ export default Ember.Controller.extend({
   theme: 'ace/theme/textmate',
   themes: [
     'ambiance',
-    'tomorrow_night_eighties',
     'chaos'
   ].map(theme => `ace/theme/${theme}`),
 

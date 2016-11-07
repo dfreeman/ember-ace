@@ -5,7 +5,7 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
     ace: {
-      themes: ['ambiance', 'chaos', 'tomorrow_night_eighties'],
+      themes: ['ambiance', 'chaos'],
       modes: ['javascript'],
       workers: ['javascript']
     }
