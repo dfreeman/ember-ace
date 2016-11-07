@@ -16,26 +16,36 @@ ember install ember-ace
 
 ### Options
 
-value
-update
-ready
+#### Core
+ - value
+ - update
+ - ready
 
-mode
-theme
-useSoftTabs
-tabSize
-useWrapMode
-highlightActiveLine
-showPrintMargin
-printMarginColumn
-showInvisibles
-readOnly
+#### Configuration
+ - mode
+ - theme
+ - useSoftTabs
+ - tabSize
+ - useWrapMode
+ - highlightActiveLine
+ - showPrintMargin
+ - printMarginColumn
+ - showInvisibles
+ - readOnly
 
-lines
-minLines
-maxLines
+#### Sizing
+ - lines
+ - minLines
+ - maxLines
 
-markers
-annotations
+#### Overlays
+ - markers
+ - annotations
 
 ### Build Configuration
+
+ - modes
+ - themes
+ - exts
+ - keybindings
+ - workers
