@@ -49,9 +49,9 @@ test('notifying value updates', function(assert) {
 });
 
 test('setting a theme', function(assert) {
-  this.set('theme', 'ace/theme/tomorrow_night_eighties');
+  this.set('theme', 'ace/theme/ambiance');
   this.render(hbs`{{ember-ace theme=theme}}`);
-  assert.ok(this.$('.ace_editor').is('.ace-tomorrow-night-eighties'));
+  assert.ok(this.$('.ace_editor').is('.ace-ambiance'));
 
   Ember.run(() => this.set('theme', 'ace/theme/chaos'));
   assert.ok(this.$('.ace_editor').is('.ace-chaos'));
