@@ -139,7 +139,7 @@ const ACE_HANDLERS = Object.freeze({
 
   value(editor, newValue) {
     if (editor.getValue() !== newValue) {
-      editor.setValue(newValue);
+      editor.setValue(newValue, -1);
     }
   }
 });
