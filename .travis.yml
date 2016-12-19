@@ -1,19 +1,16 @@
 ---
 language: node_js
 node_js:
-  - "0.12"
+  - "4"
+  - "node"
 
 sudo: false
 
 cache:
+  yarn: true
   directories:
     - node_modules
 
-before_install:
-  - npm config set spin false
-  - npm install -g phantomjs-prebuilt
-
-install:
-  - npm install -g bower
-  - npm install
+before_script:
+  - yarn global add bower phantomjs-prebuilt
   - bower install
