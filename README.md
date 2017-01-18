@@ -64,10 +64,10 @@ new EmberApp(defaults, {
 });
 ```
 
-For each of the following types, you may specify an array of names to be included in your Ace build (as above). To see the full list of available entities, check the `src-noconflict` directory of the `ace-builds` npm package that this addon depends on.
+For each of the following types, you may specify an array of names to be included in your Ace build (as above).
 
- - `modes`: syntax highlighting and editor behaviors for different languages
- - `workers`: background workers to provide things like linting and semantic checks for certain languages
- - `themes`: color schemes for the editor
- - `exts`: editor extensions, like spellcheck and Emmet abbreviations
- - `keybindings`: common keybindings from editors like Emacs and Vim
+ - `modes`: syntax highlighting and editor behaviors for different languages ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/mode))
+ - `workers`: background workers to perform more expensive processing available for some modes ([see all, intermingled with modes](https://github.com/ajaxorg/ace/tree/master/lib/ace/mode))
+ - `themes`: color schemes for the editor ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme))
+ - `exts`: editor extensions, like spellcheck and Emmet abbreviations ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/ext))
+ - `keybindings`: common keybindings from editors like Emacs and Vim ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/keyboard))
