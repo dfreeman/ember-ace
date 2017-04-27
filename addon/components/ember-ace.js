@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   printMarginColumn: 80,
   showInvisibles: false,
   readOnly: false,
+  showLineNumbers: true,
 
   markers: Ember.computed(() => []),
   annotations: Ember.computed(() => []),
@@ -89,6 +90,8 @@ export default Ember.Component.extend({
       editor.setOption(key, value);
     } else if (handler === 'session') {
       editor.session.setOption(key, value);
+    } else if (handler === 'renderer') {
+      editor.renderer.setOption(key, value);
     } else if (typeof handler === 'function') {
       handler.call(this, editor, value);
     }
@@ -108,6 +111,7 @@ const ACE_HANDLERS = Object.freeze({
   showInvisibles: 'editor',
   showPrintMargin: 'editor',
   printMarginColumn: 'editor',
+  showLineNumbers: 'renderer',
   readOnly: 'editor',
   minLines: 'editor',
   maxLines: 'editor',
