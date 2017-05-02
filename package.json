@@ -1,6 +1,6 @@
 {
   "name": "ember-ace",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An Ember addon for the Ace code editor",
   "directories": {
     "doc": "doc",
