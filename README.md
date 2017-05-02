@@ -34,6 +34,7 @@ See the application controller in this addon's dummy application for usage examp
  - `printMarginColumn`: a boolean indicating what column the print margin (if enabled) should appear at
  - `showInvisibles`: a boolean indicating whether to show invisible characters
  - `readOnly`: a boolean indicating whether the editor is locked to the user
+ - `showLineNumbers`: a boolean indicating if line numbers are shown in the left gutter. Default to true.
 
 #### Sizing
  - `lines`: the number of lines the editor should show (shorthand for setting both `minLines` and `maxLines`)
