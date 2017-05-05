@@ -1,7 +1,13 @@
 import Ember from 'ember';
 import ace from 'ember-ace';
 
-export default Ember.Component.extend({
+const {
+  run,
+  computed,
+  Component,
+} = Ember;
+
+export default Component.extend({
   tagName: 'pre',
 
   mode: undefined,
@@ -16,18 +22,21 @@ export default Ember.Component.extend({
   readOnly: false,
   showLineNumbers: true,
 
-  markers: Ember.computed(() => []),
-  annotations: Ember.computed(() => []),
-
   maxLines: undefined,
   minLines: undefined,
 
-  lines: Ember.computed({
+  lines: computed({
     set(key, value) {
       this.set('minLines', value);
       this.set('maxLines', value);
     }
   }),
+
+  init() {
+    this._super(...arguments);
+    this.markers = this.markers || [];
+    this.annotations = this.annotations || [];
+  },
 
   didInsertElement() {
     this._super();
@@ -79,7 +88,7 @@ export default Ember.Component.extend({
     });
 
     // Render within this run loop, for consistency with Ember's normal component rendering flow
-    Ember.run.scheduleOnce('render', this, () => this.editor.renderer.updateFull(true));
+    run.scheduleOnce('render', this, () => this.editor.renderer.updateFull(true));
   },
 
   _syncAceProperty(key, value) {
@@ -130,7 +139,7 @@ const ACE_HANDLERS = Object.freeze({
   },
 
   annotations(editor, newValue) {
-    Ember.run.schedule('render', this, () => editor.session.setAnnotations(newValue));
+    run.schedule('render', this, () => editor.session.setAnnotations(newValue));
   },
 
   useWrapMode(editor, newValue) {
