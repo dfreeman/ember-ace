@@ -34,6 +34,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
+    this._silenceUpdates = false;
     this.markers = this.markers || [];
     this.annotations = this.annotations || [];
   },
@@ -63,8 +64,8 @@ export default Component.extend({
 
     editor.getSession().on('change', (event, session) => {
       const update = this.get('update');
-      if (update) {
-        Ember.run(() => update(session.getValue()));
+      if (update && !this._silenceUpdates) {
+        run(() => update(session.getValue()));
       }
     });
 
@@ -81,10 +82,13 @@ export default Component.extend({
 
     this.set('_previousAceValues', newValues);
 
-    Object.keys(newValues).forEach((key) => {
-      if (oldValues[key] !== newValues[key]) {
-        this._syncAceProperty(key, newValues[key]);
-      }
+    // Don't trigger the update action as a result of value syncing
+    this._withUpdatesSilenced(() => {
+      Object.keys(newValues).forEach((key) => {
+        if (oldValues[key] !== newValues[key]) {
+          this._syncAceProperty(key, newValues[key]);
+        }
+      });
     });
 
     // Render within this run loop, for consistency with Ember's normal component rendering flow
@@ -103,6 +107,16 @@ export default Component.extend({
       editor.renderer.setOption(key, value);
     } else if (typeof handler === 'function') {
       handler.call(this, editor, value);
+    }
+  },
+
+  _withUpdatesSilenced(callback) {
+    const previous = this._silenceUpdates;
+    try {
+      this._silenceUpdates = true;
+      callback();
+    } finally {
+      this._silenceUpdates = previous;
     }
   },
 
