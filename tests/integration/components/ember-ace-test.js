@@ -39,13 +39,24 @@ test('leading, trailing and internal whitespace', function(assert) {
   assert.equal(this.component.value, this.get('value').trim());
 });
 
-test('notifying value updates', function(assert) {
+test('internal value updates', function(assert) {
   this.set('change', sinon.spy());
   this.render(hbs`{{ember-ace lines=1 update=(action change)}}`);
 
   this.component.setValue('hello');
   assert.ok(this.get('change').calledWith('hello'));
+  assert.equal(this.get('change.callCount'), 1);
   assert.equal(this.component.value, 'hello');
+});
+
+test('external value updates', function(assert) {
+  this.set('value', 'one');
+  this.set('change', sinon.spy());
+  this.render(hbs`{{ember-ace lines=1 value=value update=(action change)}}`);
+
+  Ember.run(() => this.set('value', 'two'));
+  assert.equal(this.get('change.callCount'), 0);
+  assert.equal(this.component.value, 'two');
 });
 
 test('setting a theme', function(assert) {
