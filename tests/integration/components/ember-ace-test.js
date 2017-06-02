@@ -132,6 +132,29 @@ test('back range markers', function(assert) {
   assert.equal(this.component.backMarkers().count, 0);
 });
 
+test('overlays', function(assert) {
+  this.set('value', 'hellow\neveryone\nin the world');
+  this.set('overlays', [
+    { type: 'error', range: new Range(0, 0, 1, 1), text: 'ruh roh' },
+    { type: 'info', range: new Range(2, 0, 2, 5), text: 'btw' }
+  ]);
+
+  this.render(hbs`{{ember-ace lines=3 overlays=overlays value=value}}`);
+  assert.equal(this.component.annotations().count, 2);
+  assert.equal(this.component.frontMarkers().count, 2);
+  assert.equal(this.component.backMarkers().count, 0);
+
+  assert.equal(this.component.annotations(0).type, 'error');
+  assert.equal(this.component.annotations(0).row, 0);
+  assert.equal(this.component.frontMarkers(0).type, 'ember-ace-error');
+  assert.equal(this.component.frontMarkers(0).segmentCount, 2);
+
+  assert.equal(this.component.annotations(1).type, 'info');
+  assert.equal(this.component.annotations(1).row, 2);
+  assert.equal(this.component.frontMarkers(1).type, 'ember-ace-info');
+  assert.equal(this.component.frontMarkers(1).segmentCount, 1);
+});
+
 test('basic autocomplete', async function(assert) {
   this.set('suggestCompletions', (editor, session, position, prefix) => {
     return [

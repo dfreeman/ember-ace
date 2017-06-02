@@ -1,4 +1,7 @@
-<style>.editor-error { background-color: rgba(255, 0, 0, 0.5); position: absolute; }</style>
+<style>
+  .ember-ace-error { background-color: rgba(255, 0, 0, 0.5); position: absolute; }
+  .ember-ace-warning { background-color: rgba(200, 200, 0, 0.5); position: absolute; }
+</style>
 
 {{#ember-ace
   lines=10
@@ -11,8 +14,7 @@
   useWrapMode=useWrapMode
   showInvisibles=showInvisibles
   theme=theme
-  markers=markers
-  annotations=annotations
+  overlays=overlays
   update=(action (mut value))
   suggestCompletions=(action 'suggestCompletions')
   as |editor|
@@ -97,3 +99,60 @@
   >
   tabSize
 </label>
+
+<h3>Overlay</h3>
+<div style="display: flex; flex-flow: column">
+  <label>
+    text
+    <input
+      type="text"
+      value={{overlay.text}}
+      oninput={{action (mut overlay.text) value='target.value'}}
+    >
+  </label>
+
+  <label>
+    type
+    <select onchange={{action (mut overlay.type) value='target.value'}}>
+      <option value='error'>error</option>
+      <option value='warning' selected>warning</option>
+      <option value='info'>info</option>
+    </select>
+  </label>
+
+  <label>
+    start row
+    <input
+      type="number"
+      value={{overlay.range.start.row}}
+      oninput={{action (mut overlay.range.start.row) value='target.value'}}
+    >
+  </label>
+
+  <label>
+    start column
+    <input
+      type="number"
+      value={{overlay.range.start.column}}
+      oninput={{action (mut overlay.range.start.column) value='target.value'}}
+    >
+  </label>
+
+  <label>
+    end row
+    <input
+      type="number"
+      value={{overlay.range.end.row}}
+      oninput={{action (mut overlay.range.end.row) value='target.value'}}
+    >
+  </label>
+
+  <label>
+    end column
+    <input
+      type="number"
+      value={{overlay.range.end.column}}
+      oninput={{action (mut overlay.range.end.column) value='target.value'}}
+    >
+  </label>
+</div>

@@ -1,7 +1,12 @@
 import Ember from 'ember';
 import { Range } from 'ember-ace';
 
-export default Ember.Controller.extend({
+const {
+  Controller,
+  computed
+} = Ember;
+
+export default Controller.extend({
   value: 'one two three\nfour five size\nseven eight nine',
 
   highlightActiveLine: true,
@@ -15,17 +20,20 @@ export default Ember.Controller.extend({
 
   theme: 'ace/theme/textmate',
   themes: [
-    'ambiance',
-    'chaos'
-  ].map(theme => `ace/theme/${theme}`),
-
-  markers: [
-    { class: 'editor-error', range: new Range(1, 6, 2, 5) }
+    'ace/theme/textmate',
+    'ace/theme/ambiance',
+    'ace/theme/chaos',
   ],
 
-  annotations: [
-    { row: 1, text: 'hello', type: 'warning' }
-  ],
+  overlay: {
+    type: 'warning',
+    text: 'by the way',
+    range: new Range(0, 4, 0, 7),
+  },
+
+  overlays: computed('overlay.{type,text}', 'overlay.range.{start,end}.{row,column}', function() {
+    return [this.get('overlay')];
+  }),
 
   actions: {
     suggestCompletions(editor, session, position, prefix) {

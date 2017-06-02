@@ -46,11 +46,29 @@ export default Component.extend({
     }
   }),
 
+  overlays: computed(() => []),
+
+  markers: computed('overlays.[]', function() {
+    const overlays = this.get('overlays') || [];
+    return overlays.map((overlay) => ({
+      class: `ember-ace-${overlay.type} ${overlay.class || ''}`,
+      range: overlay.range,
+      inFront: true,
+    }));
+  }),
+
+  annotations: computed('overlays.[]', function() {
+    const overlays = this.get('overlays') || [];
+    return overlays.map((overlay) => ({
+      type: overlay.type,
+      text: overlay.text,
+      row: overlay.range.start.row,
+    }));
+  }),
+
   init() {
     this._super(...arguments);
     this._silenceUpdates = false;
-    this.markers = this.markers || [];
-    this.annotations = this.annotations || [];
   },
 
   didInsertElement() {

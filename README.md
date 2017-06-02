@@ -47,7 +47,14 @@ See the application controller in this addon's dummy application for usage examp
  - `suggestCompletions`: an action to supply your own completion suggestions (see below for details)
 
 #### Overlays
- - `markers`: an array of marker objects, each containing the following keys:
+ - `overlays`: an array of objects describing notices that should be overlaid on the editor, each containing the following keys:
+   - `type`: one of `error`, `warning` or `info`, which will impact the icon that appears on the overlaid row
+   - `text`: text for a tooltip that will appear when the user hovers the overlay icon
+   - `range`: an `Ace.Range` instance denoting the section of text to be marked
+   - `class`: a string containing any classes that should be added to the element(s) overlaying the marked text (an `ember-ace-${type}` class will automatically be applied)
+
+Note that `overlays` is actually shorthand for configuring the following two options individually:
+ - `markers`: an array of text marker objects, each containing the following keys:
    - `class`: the class name that should be applied to the element(s) overlaying the marked text
    - `range`: an `Ace.Range` instance denoting the section of text to be marked
    - `inFront`: a boolean (default `true`) indicating whether the marker should be in front of or behind the text layer
@@ -100,11 +107,11 @@ Each suggestion may also have a rendered tooltip providing arbitrary additional 
 
 ```hbs
 {{#ember-ace ... as |editor|}}
- {{#editor.completion-tooltip as |suggestion|}}
-   {{!
-     Here, `suggestion` is an object from the array returned by `suggestCompletions`.
-     You can include any additional information you want there to facilitate rendering here.
-   }}
- {{/editor.completion-tooltip}}
+  {{#editor.completion-tooltip as |suggestion|}}
+    {{!
+      Here, `suggestion` is an object from the array returned by `suggestCompletions`.
+      You can include any additional information you want there to facilitate rendering here.
+    }}
+  {{/editor.completion-tooltip}}
 {{/ember-ace}}
 ```
