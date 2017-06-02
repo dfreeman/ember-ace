@@ -1,6 +1,6 @@
 <style>.editor-error { background-color: rgba(255, 0, 0, 0.5); position: absolute; }</style>
 
-{{ember-ace
+{{#ember-ace
   lines=10
   value=value
   highlightActiveLine=highlightActiveLine
@@ -14,7 +14,13 @@
   markers=markers
   annotations=annotations
   update=(action (mut value))
+  suggestCompletions=(action 'suggestCompletions')
+  as |editor|
 }}
+  {{#editor.completion-tooltip as |suggestion|}}
+    Caption: {{suggestion.caption}}
+  {{/editor.completion-tooltip}}
+{{/ember-ace}}
 
 <pre>{{value}}</pre>
 

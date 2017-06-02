@@ -41,6 +41,11 @@ See the application controller in this addon's dummy application for usage examp
  - `minLines`: the minimum number of lines the editor should contain
  - `maxLines`: the maximum number of lines the editor should expand to
 
+#### Completion
+ - `enableDefaultAutocompletion`: a boolean indicating whether to enable Ace's default completions (which basically just look for similar words within the existing document)
+ - `enableLiveAutocompletion`: whether to automatically trigger completion, or require the user to make an explicit gesture (typically `Ctrl + Space`)
+ - `suggestCompletions`: an action to supply your own completion suggestions (see below for details)
+
 #### Overlays
  - `markers`: an array of marker objects, each containing the following keys:
    - `class`: the class name that should be applied to the element(s) overlaying the marked text
@@ -72,3 +77,34 @@ For each of the following types, you may specify an array of names to be include
  - `themes`: color schemes for the editor ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme))
  - `exts`: editor extensions, like spellcheck and Emmet abbreviations ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/ext))
  - `keybindings`: common keybindings from editors like Emacs and Vim ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/keyboard))
+
+### Autocompletion
+**Note**: completion requires the language tools extension to be included. You'll need to set `exts: ['language_tools']` in your configuration in order for autocomplete to work.
+
+#### Custom Completion
+To enable custom autocomplete suggestions in your editor, you can implement the `suggestCompletions` action. The action will receive four arguments:
+  - `editor`: an Ace [Editor](https://ace.c9.io/#nav=api&api=editor) instance
+  - `session`: an Ace [EditSession](https://ace.c9.io/#nav=api&api=edit_session) instance
+  - `position`: a hash with `row` and `column` indicating where the cursor is in the document
+  - `prefix`: the leading characters the user entered before triggering completion
+
+The action is expected to return an array (or a promise for one) containing objects with the following keys:
+  - `value`: the core 'value' this suggestion is considered to hold (note that any suggestions whose value doesn't include the given prefix are filtered out by Ace)
+  - `score`: a numeric value indicating how good a match this suggestion is (optional; higher is better)
+  - `caption`: the text that will appear in the dropdown representing this suggestion (defaults to `value`)
+  - `meta`: supplemental information that will appear on the righthand side in the dropdown for this suggestion (optional)
+  - `snippet`: a string representing what will actually appear in the editor if this suggestion is selected (defaults to `value`)
+
+#### Completion Tooltips
+Each suggestion may also have a rendered tooltip providing arbitrary additional information about that suggestion (e.g. function documentation). To do so, you can use the `completion-tooltip` contextual component:
+
+```hbs
+{{#ember-ace ... as |editor|}}
+ {{#editor.completion-tooltip as |suggestion|}}
+   {{!
+     Here, `suggestion` is an object from the array returned by `suggestCompletions`.
+     You can include any additional information you want there to facilitate rendering here.
+   }}
+ {{/editor.completion-tooltip}}
+{{/ember-ace}}
+```

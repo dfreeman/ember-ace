@@ -25,5 +25,14 @@ export default Ember.Controller.extend({
 
   annotations: [
     { row: 1, text: 'hello', type: 'warning' }
-  ]
+  ],
+
+  actions: {
+    suggestCompletions(editor, session, position, prefix) {
+      return [
+        { value: prefix + '111', snippet: 'one', meta: 'MetaOne', caption: 'The one', score: 1 },
+        { value: prefix + '222', snippet: 'two', meta: 'MetaTwo', caption: 'The two', score: 2 },
+      ];
+    }
+  }
 });

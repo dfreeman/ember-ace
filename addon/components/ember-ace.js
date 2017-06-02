@@ -1,14 +1,18 @@
 import Ember from 'ember';
+import CompletionManager from 'ember-ace/utils/completion-manager';
+import layout from 'ember-ace/templates/components/ember-ace';
 import ace from 'ember-ace';
 
 const {
   run,
+  warn,
   computed,
+  tryInvoke,
   Component,
 } = Ember;
 
 export default Component.extend({
-  tagName: 'pre',
+  layout,
 
   mode: undefined,
   theme: undefined,
@@ -24,6 +28,16 @@ export default Component.extend({
 
   maxLines: undefined,
   minLines: undefined,
+
+  enableDefaultAutocompletion: false,
+  enableLiveAutocompletion: undefined,
+  enableBasicAutocompletion: computed('enableDefaultAutocompletion', 'suggestCompletions', function() {
+    const enableDefault = this.get('enableDefaultAutocompletion');
+    const suggestCompletions = this.get('suggestCompletions');
+    if (enableDefault || suggestCompletions) {
+      return HAS_LANGUAGE_TOOLS || emitLanguageToolsWarning();
+    }
+  }),
 
   lines: computed({
     set(key, value) {
@@ -55,10 +69,11 @@ export default Component.extend({
   },
 
   _instantiateEditor() {
-    const editor = this.editor = ace.edit(this.element);
+    const editor = this.editor = ace.edit(this.element.querySelector('[data-ember-ace]'));
 
     // Avoid a deprecation warning from Ace
     editor.$blockScrolling = Infinity;
+    editor.completers = this._buildCompleters(editor);
 
     this._syncAceProperties();
 
@@ -120,8 +135,35 @@ export default Component.extend({
     }
   },
 
+  _buildCompleters(editor) {
+    const includeDefaults = this.get('enableDefaultAutocompletion');
+    const completers = (includeDefaults && editor.completers) || [];
+    return [this._buildCompletionManager(), ...completers];
+  },
+
+  _buildCompletionManager() {
+    const suggestCompletions = (...params) => run(() => tryInvoke(this, 'suggestCompletions', params));
+    const renderCompletionTooltip = (suggestion) => {
+      run(() => this.set('suggestionToRender', suggestion));
+      const rendered = this.element.querySelector('[data-rendered-suggestion]');
+      const html = rendered ? rendered.innerHTML.trim() : null;
+      run(() => this.set('suggestionToRender', null));
+      return html;
+    };
+
+    return new CompletionManager({ suggestCompletions, renderCompletionTooltip });
+  },
+
   _destroyEditor() {
     if (this.editor) {
+      const { completer } = this.editor;
+      if (completer) {
+        // autocomplete doesn't clean itself up well
+        completer.popup.container.remove();
+        completer.popup.destroy();
+        completer.detach();
+      }
+
       this.editor.destroy();
       this.editor = null;
     }
@@ -138,6 +180,9 @@ const ACE_HANDLERS = Object.freeze({
   readOnly: 'editor',
   minLines: 'editor',
   maxLines: 'editor',
+
+  enableBasicAutocompletion: 'editor',
+  enableLiveAutocompletion: 'editor',
 
   tabSize: 'session',
   useSoftTabs: 'session',
@@ -172,3 +217,13 @@ const ACE_HANDLERS = Object.freeze({
 });
 
 const ACE_PROPERTIES = Object.freeze(Object.keys(ACE_HANDLERS));
+const HAS_LANGUAGE_TOOLS = !!ace.require('ace/ext/language_tools');
+
+function emitLanguageToolsWarning() {
+  warn(
+    "You've defined a `suggestCompletions` action, but the `language_tools` extension isn't present. " +
+    "To use autocomplete, you must have `exts: ['language_tools']` in your ember-ace build config.",
+    false,
+    { id: 'ember-ace.missing-language-tools' }
+  );
+}

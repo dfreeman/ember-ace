@@ -8,7 +8,16 @@ module.exports = function(defaults) {
     ace: {
       themes: ['ambiance', 'chaos'],
       modes: ['javascript'],
-      workers: ['javascript']
+      workers: ['javascript'],
+      exts: ['language_tools'],
+    },
+
+    'ember-cli-babel': {
+      includePolyfill: true,
+    },
+
+    babel: {
+      plugins: ['transform-object-rest-spread'],
     }
   });
 
