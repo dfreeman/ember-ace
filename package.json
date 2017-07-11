@@ -20,9 +20,9 @@
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "ember-cli": "^2.13.2",
-    "ember-cli-dependency-checker": "^2.0.0",
-    "ember-cli-eslint": "^3.1.0",
+    "ember-cli": "^2.14.0",
+    "ember-cli-dependency-checker": "^2.0.1",
+    "ember-cli-eslint": "^4.1.0",
     "ember-cli-htmlbars-inline-precompile": "^0.4.3",
     "ember-cli-inject-live-reload": "^1.6.1",
     "ember-cli-page-object": "^1.11.0",
@@ -34,10 +34,10 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-load-initializers": "^1.0.0",
-    "ember-resolver": "^4.1.0",
+    "ember-resolver": "^4.3.0",
     "ember-sinon": "^0.7.0",
-    "ember-source": "^2.13.3",
-    "loader.js": "^4.4.0"
+    "ember-source": "^2.14.0",
+    "loader.js": "^4.5.1"
   },
   "keywords": [
     "ember-addon"
@@ -46,8 +46,8 @@
     "ace-builds": "^1.2.8",
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-plugin": "^1.2.1",
-    "ember-cli-babel": "^6.4.1",
-    "ember-cli-htmlbars": "^2.0.1",
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-htmlbars": "^2.0.2",
     "ember-cli-node-assets": "^0.2.2"
   },
   "ember-addon": {
