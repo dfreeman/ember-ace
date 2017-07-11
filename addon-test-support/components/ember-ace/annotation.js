@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import { findElementWithAssert } from 'ember-cli-page-object';
 
 export default {

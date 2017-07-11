@@ -2,8 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import { TextMode, TextHighlightRules, Range } from 'ember-ace';
 import PageObject from 'ember-cli-page-object';
-import pollCondition from 'dummy/tests/components/ember-ace/helpers/poll-condition';
-import aceComponent from 'dummy/tests/components/ember-ace';
+import pollCondition from 'ember-ace/test-support/helpers/poll-condition';
+import aceComponent from 'ember-ace/test-support/components/ember-ace';
 import hbs from 'htmlbars-inline-precompile';
 import sinon from 'sinon';
 
@@ -199,12 +199,13 @@ test('autocomplete with tooltips', async function(assert) {
   `);
 
   const { autocomplete } = this.component;
+  const { tooltip } = autocomplete;
 
   await autocomplete.trigger();
-  await pollCondition('tooltip rendered', () => autocomplete.tooltip.text === 'Payload: key1');
+  await pollCondition('tooltip rendered', () => tooltip.isVisible && tooltip.text === 'Payload: key1');
 
   await autocomplete.focusNext();
-  await pollCondition('tooltip rendered', () => autocomplete.tooltip.text === 'Payload: key2');
+  await pollCondition('tooltip rendered', () => tooltip.isVisible && tooltip.text === 'Payload: key2');
 });
 
 test('setting a custom mode', function(assert) {

@@ -1,6 +1,5 @@
-import RSVP from 'rsvp';
-import pollCondition from './helpers/poll-condition';
-import editorInteraction from './helpers/editor-interaction';
+import pollCondition from 'ember-ace/test-support/helpers/poll-condition';
+import editorInteraction from 'ember-ace/test-support/helpers/editor-interaction';
 import { text, collection, is, isVisible } from 'ember-cli-page-object';
 
 /**
