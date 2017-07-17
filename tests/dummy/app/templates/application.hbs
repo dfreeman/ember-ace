@@ -13,6 +13,7 @@
   useSoftTabs=useSoftTabs
   useWrapMode=useWrapMode
   showInvisibles=showInvisibles
+  showGutter=showGutter
   theme=theme
   overlays=overlays
   update=(action (mut value))
@@ -80,6 +81,15 @@
     onchange={{action (mut showInvisibles) value='target.checked'}}
   >
   showInvisibles
+</label>
+
+<label>
+  <input
+    type="checkbox"
+    checked={{showGutter}}
+    onchange={{action (mut showGutter) value='target.checked'}}
+  >
+  showGutter
 </label>
 
 <label>

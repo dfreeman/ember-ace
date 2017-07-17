@@ -25,6 +25,7 @@ export default Component.extend({
   showInvisibles: false,
   readOnly: false,
   showLineNumbers: true,
+  showGutter: true,
 
   maxLines: undefined,
   minLines: undefined,
@@ -194,7 +195,6 @@ const ACE_HANDLERS = Object.freeze({
   showInvisibles: 'editor',
   showPrintMargin: 'editor',
   printMarginColumn: 'editor',
-  showLineNumbers: 'renderer',
   readOnly: 'editor',
   minLines: 'editor',
   maxLines: 'editor',
@@ -204,6 +204,9 @@ const ACE_HANDLERS = Object.freeze({
 
   tabSize: 'session',
   useSoftTabs: 'session',
+
+  showLineNumbers: 'renderer',
+  showGutter: 'renderer',
 
   markers(editor, newValue) {
     (this._markerIds || []).forEach(id => editor.session.removeMarker(id));

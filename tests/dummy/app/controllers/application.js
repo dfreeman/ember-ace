@@ -17,6 +17,7 @@ export default Controller.extend({
   useSoftTabs: true,
   wrap: true,
   showInvisibles: true,
+  showGutter: true,
 
   theme: 'ace/theme/textmate',
   themes: [
