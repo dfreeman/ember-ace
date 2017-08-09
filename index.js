@@ -60,7 +60,7 @@ function calculateWorkerPaths(options) {
   var workers = {};
   if (options.workers) {
     options.workers.forEach(function(name) {
-      workers['ace/mode/' + name + '_worker'] = '/assets/ace/worker-' + name + '.js';
+      workers['ace/mode/' + name + '_worker'] = '/js/course-designer/assets/ace/worker-' + name + '.js';
     });
   }
   return workers;
