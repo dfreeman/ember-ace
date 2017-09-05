@@ -177,9 +177,11 @@ export default Component.extend({
     if (this.editor) {
       const { completer } = this.editor;
       if (completer) {
-        // autocomplete doesn't clean itself up well
-        completer.popup.container.remove();
-        completer.popup.destroy();
+        // autocomplete options may have been initialized without a popup ever rendering
+        if (completer.popup) {
+          completer.popup.container.remove();
+          completer.popup.destroy();
+        }
         completer.detach();
       }
 
