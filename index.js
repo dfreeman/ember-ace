@@ -59,8 +59,9 @@ function calculatePublicFiles(options) {
 function calculateWorkerPaths(options) {
   var workers = {};
   if (options.workers) {
+    var workerPath = options.workerPath || '/assets/ace';
     options.workers.forEach(function(name) {
-      workers['ace/mode/' + name + '_worker'] = '/assets/ace/worker-' + name + '.js';
+      workers['ace/mode/' + name + '_worker'] = workerPath + '/worker-' + name + '.js';
     });
   }
   return workers;

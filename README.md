@@ -85,6 +85,17 @@ For each of the following types, you may specify an array of names to be include
  - `exts`: editor extensions, like spellcheck and Emmet abbreviations ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/ext))
  - `keybindings`: common keybindings from editors like Emacs and Vim ([see all](https://github.com/ajaxorg/ace/tree/master/lib/ace/keyboard))
 
+If you need to customize the worker path you can specify `workerPath` in the build configuration.
+
+```js
+new EmberApp(defaults, {
+  ace: {
+    ...
+    workerPath: '/my/custom/worker-path'
+  }
+});
+```
+
 ### Autocompletion
 **Note**: completion requires the language tools extension to be included. You'll need to set `exts: ['language_tools']` in your configuration in order for autocomplete to work.
 
