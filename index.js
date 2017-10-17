@@ -18,7 +18,7 @@ module.exports = {
   },
 
   included: function(parent) {
-    this.aceOptions = (parent.app.options || parent.options || {}).ace || {};
+    this.aceOptions = (parent.options || parent.app.options || {}).ace || {};
     this._super.included.apply(this, arguments);
   },
 
