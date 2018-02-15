@@ -54,7 +54,7 @@ export default Component.extend({
     return overlays.map((overlay) => ({
       class: `ember-ace-${overlay.type} ${overlay.class || ''}`,
       range: overlay.range,
-      inFront: true,
+      inFront: overlay.hasOwnProperty('inFront') ? overlay.inFront : true,
     }));
   }),
 
