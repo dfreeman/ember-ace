@@ -37,6 +37,7 @@ See the application controller in this addon's dummy application for usage examp
  - `showLineNumbers`: a boolean indicating if line numbers are shown in the left gutter. Default to true.
 
 #### Sizing
+ - `editorClass`: a CSS class name that will be applied to the element that Ace is instantiated on (note that setting `class` will apply to the ember-ace wrapper)
  - `lines`: the number of lines the editor should show (shorthand for setting both `minLines` and `maxLines`)
  - `minLines`: the minimum number of lines the editor should contain
  - `maxLines`: the maximum number of lines the editor should expand to
