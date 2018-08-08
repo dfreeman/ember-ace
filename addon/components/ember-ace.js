@@ -1,15 +1,11 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { warn } from '@ember/debug';
+import { computed } from '@ember/object';
+import { tryInvoke } from '@ember/utils';
+import Component from '@ember/component';
 import CompletionManager from 'ember-ace/utils/completion-manager';
 import layout from 'ember-ace/templates/components/ember-ace';
 import ace from 'ember-ace';
-
-const {
-  run,
-  warn,
-  computed,
-  tryInvoke,
-  Component,
-} = Ember;
 
 export default Component.extend({
   layout,
