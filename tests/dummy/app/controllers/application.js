@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { Range } from 'ember-ace';
-
-const {
-  Controller,
-  computed
-} = Ember;
 
 export default Controller.extend({
   value: 'one two three\nfour five size\nseven eight nine',
@@ -20,17 +16,17 @@ export default Controller.extend({
   showGutter: true,
 
   theme: 'ace/theme/textmate',
-  themes: [
+  themes: Object.freeze([
     'ace/theme/textmate',
     'ace/theme/ambiance',
     'ace/theme/chaos',
-  ],
+  ]),
 
-  overlay: {
+  overlay: Object.freeze({
     type: 'warning',
     text: 'by the way',
     range: new Range(0, 4, 0, 7),
-  },
+  }),
 
   overlays: computed('overlay.{type,text}', 'overlay.range.{start,end}.{row,column}', function() {
     return [this.get('overlay')];

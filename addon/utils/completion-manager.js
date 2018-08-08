@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import RSVP from 'rsvp';
-
-const { run } = Ember;
 
 /**
  * Supports Ace's interface for supplying completion information.
