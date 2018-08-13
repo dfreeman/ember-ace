@@ -92,25 +92,25 @@ export default Component.extend({
 
     this._syncAceProperties();
 
-    let settingValue = false;
-    let newValue = null;
-
     const originalSetValue = editor.setValue;
-    editor.setValue = function(value) {
-      newValue = value;
-      settingValue = true;
-      originalSetValue.call(editor, ...arguments);
-      settingValue = false;
+    editor.setValue = (...args) => {
+      const wasSilenced = this._silenceUpdates;
+      const update = this.get('update');
+
+      // Ace implements document.setValue by first removing and then inserting,
+      // so silence regular updates here, and instead call update directly 
+      this._silenceUpdates = true;
+      originalSetValue.call(editor, ...args);
+      this._silenceUpdates = wasSilenced;
+
+      if (update && !wasSilenced) {
+        run(() => update(editor.session.getValue()));
+      }
     }
 
     editor.getSession().on('change', (event, session) => {
       const update = this.get('update');
 
-      // Ace implements document.setValue by first removing and then inserting
-      // These checks prevent ember-ace from triggering 'update' more than once per setValue
-      if (settingValue && newValue && event.action === 'remove') {
-        return;
-      }
       if (update && !this._silenceUpdates) {
         run(() => update(session.getValue()));
       }
