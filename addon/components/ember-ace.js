@@ -94,7 +94,6 @@ export default Component.extend({
 
     const originalSetValue = editor.setValue;
     editor.setValue = (...args) => {
-      const wasSilenced = this._silenceUpdates;
       const update = this.get('update');
 
       // Ace implements document.setValue by first removing and then inserting,
@@ -103,7 +102,7 @@ export default Component.extend({
         originalSetValue.call(editor, ...args);
       })
 
-      if (update && !wasSilenced) {
+      if (update && !this._silenceUpdates) {
         run(() => update(editor.session.getValue()));
       }
     }
