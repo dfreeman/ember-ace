@@ -92,8 +92,24 @@ export default Component.extend({
 
     this._syncAceProperties();
 
+    const originalSetValue = editor.setValue;
+    editor.setValue = (...args) => {
+      const update = this.get('update');
+
+      // Ace implements document.setValue by first removing and then inserting,
+      // so silence regular updates here, and instead call update directly
+      this._withUpdatesSilenced(() => {
+        originalSetValue.call(editor, ...args);
+      })
+
+      if (update && !this._silenceUpdates) {
+        run(() => update(editor.session.getValue()));
+      }
+    }
+
     editor.getSession().on('change', (event, session) => {
       const update = this.get('update');
+
       if (update && !this._silenceUpdates) {
         run(() => update(session.getValue()));
       }

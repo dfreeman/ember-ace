@@ -50,6 +50,20 @@ module('Integration | Component | ember ace', function(hooks) {
     assert.equal(this.component.value, 'hello');
   });
 
+  test('internal value updates with initial value', async function(assert) {
+    this.set('value', 'one');
+    this.set('change', sinon.spy());
+    await render(hbs`{{ember-ace lines=1 update=(action change)}}`);
+
+    this.component.setValue('two');
+    assert.equal(this.get('change.callCount'), 1);
+    assert.equal(this.component.value, 'two');
+
+    this.component.setValue('');
+    assert.equal(this.get('change.callCount'), 2);
+    assert.equal(this.component.value, '');
+  });
+
   test('external value updates', async function(assert) {
     this.set('value', 'one');
     this.set('change', sinon.spy());
