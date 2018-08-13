@@ -98,10 +98,10 @@ export default Component.extend({
       const update = this.get('update');
 
       // Ace implements document.setValue by first removing and then inserting,
-      // so silence regular updates here, and instead call update directly 
-      this._silenceUpdates = true;
-      originalSetValue.call(editor, ...args);
-      this._silenceUpdates = wasSilenced;
+      // so silence regular updates here, and instead call update directly
+      this._withUpdatesSilenced(() => {
+        originalSetValue.call(editor, ...args);
+      })
 
       if (update && !wasSilenced) {
         run(() => update(editor.session.getValue()));
