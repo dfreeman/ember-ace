@@ -7,7 +7,8 @@ import { text, collection, is, isVisible } from 'ember-cli-page-object';
  * and metadata on the right.
  */
 export const suggestion = {
-  selected: is('.ace_selected'),
+  // selected: is('.ace_selected'),
+  selected: is('.ace_active-line'),
 
   caption: {
     isDescriptor: true,
@@ -16,7 +17,8 @@ export const suggestion = {
     }
   },
 
-  meta: text('.ace_rightAlignedText'),
+  // meta: text('.ace_rightAlignedText'),
+  meta: text('.ace_completion-meta'),
 };
 
 /**
@@ -49,7 +51,9 @@ export default {
    */
   focusNext: editorInteraction(function(editor) {
     const index = this.focusedIndex;
+    console.log(index)
     editor.completer.goTo('down');
+    debugger
     return pollCondition('next suggestion focused', () => this.focusedIndex === index + 1);
   }),
 

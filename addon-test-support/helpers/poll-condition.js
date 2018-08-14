@@ -1,5 +1,7 @@
 import RSVP from 'rsvp';
 
+// error message source
+
 export default async function pollCondition(message, callback, {
   maxTries = 50,
   interval = 5,
