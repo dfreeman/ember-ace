@@ -24,11 +24,11 @@ module('Integration | Component | ember ace', function(hooks) {
     this.set('value', 'function() {\n  console.log("hi");\n}');
     await render(hbs`{{ember-ace lines=3 value=value}}`);
 
-    assert.equal(this.component.lines().count, 3);
+    assert.equal(this.component.lines.length, 3);
     assert.equal(this.component.value, this.get('value'));
 
     run(() => this.set('value', '// nevermind'));
-    assert.equal(this.component.lines().count, 1);
+    assert.equal(this.component.lines.length, 1);
     assert.equal(this.component.value, this.get('value'));
   });
 
@@ -36,7 +36,7 @@ module('Integration | Component | ember ace', function(hooks) {
     this.set('value', '\n\na\n  \nb\n\n');
     await render(hbs`{{ember-ace lines=10 value=value}}`);
 
-    assert.equal(this.component.lines().count, 7);
+    assert.equal(this.component.lines.length, 7);
     assert.equal(this.component.value, this.get('value'));
   });
 
@@ -87,17 +87,17 @@ module('Integration | Component | ember ace', function(hooks) {
     this.set('annotations', [{ type: 'warning', row: 1 }]);
     this.set('value', 'hello\nworld');
     await render(hbs`{{ember-ace lines=3 annotations=annotations value=value}}`);
-    assert.equal(this.component.annotations().count, 1);
-    assert.equal(this.component.annotations(0).type, 'warning');
-    assert.equal(this.component.annotations(0).row, 1);
+    assert.equal(this.component.annotations.length, 1);
+    assert.equal(this.component.annotations.objectAt(0).type, 'warning');
+    assert.equal(this.component.annotations.objectAt(0).row, 1);
 
     run(() => this.set('annotations', [{ type: 'error', row: 0 }]));
-    assert.equal(this.component.annotations().count, 1);
-    assert.equal(this.component.annotations(0).type, 'error');
-    assert.equal(this.component.annotations(0).row, 0);
+    assert.equal(this.component.annotations.length, 1);
+    assert.equal(this.component.annotations.objectAt(0).type, 'error');
+    assert.equal(this.component.annotations.objectAt(0).row, 0);
 
     run(() => this.set('annotations', []));
-    assert.equal(this.component.annotations().count, 0);
+    assert.equal(this.component.annotations.length, 0);
   });
 
   test('front range markers', async function(assert) {
@@ -107,20 +107,20 @@ module('Integration | Component | ember ace', function(hooks) {
       { class: 'bar', range: new Range(2, 0, 2, 5) }
     ]);
     await render(hbs`{{ember-ace lines=3 markers=markers value=value}}`);
-    assert.equal(this.component.backMarkers().count, 0);
-    assert.equal(this.component.frontMarkers().count, 2);
-    assert.equal(this.component.frontMarkers(0).type, 'foo');
-    assert.equal(this.component.frontMarkers(0).segmentCount, 2);
-    assert.equal(this.component.frontMarkers(1).type, 'bar');
-    assert.equal(this.component.frontMarkers(1).segmentCount, 1);
+    assert.equal(this.component.backMarkers.length, 0);
+    assert.equal(this.component.frontMarkers.length, 2);
+    assert.equal(this.component.frontMarkers.objectAt(0).type, 'foo');
+    assert.equal(this.component.frontMarkers.objectAt(0).segmentCount, 2);
+    assert.equal(this.component.frontMarkers.objectAt(1).type, 'bar');
+    assert.equal(this.component.frontMarkers.objectAt(1).segmentCount, 1);
 
     run(() => this.set('markers', [{ class: 'baz', range: new Range(1, 0, 1, 1) }]));
-    assert.equal(this.component.frontMarkers().count, 1);
-    assert.equal(this.component.frontMarkers(0).type, 'baz');
-    assert.equal(this.component.frontMarkers(0).segmentCount, 1);
+    assert.equal(this.component.frontMarkers.length, 1);
+    assert.equal(this.component.frontMarkers.objectAt(0).type, 'baz');
+    assert.equal(this.component.frontMarkers.objectAt(0).segmentCount, 1);
 
     run(() => this.set('markers', []));
-    assert.equal(this.component.frontMarkers().count, 0);
+    assert.equal(this.component.frontMarkers.length, 0);
   });
 
   test('back range markers', async function(assert) {
@@ -130,20 +130,20 @@ module('Integration | Component | ember ace', function(hooks) {
       { class: 'bar', range: new Range(2, 0, 2, 5), inFront: false }
     ]);
     await render(hbs`{{ember-ace lines=3 markers=markers value=value}}`);
-    assert.equal(this.component.frontMarkers().count, 0);
-    assert.equal(this.component.backMarkers().count, 2);
-    assert.equal(this.component.backMarkers(0).type, 'foo');
-    assert.equal(this.component.backMarkers(0).segmentCount, 2);
-    assert.equal(this.component.backMarkers(1).type, 'bar');
-    assert.equal(this.component.backMarkers(1).segmentCount, 1);
+    assert.equal(this.component.frontMarkers.length, 0);
+    assert.equal(this.component.backMarkers.length, 2);
+    assert.equal(this.component.backMarkers.objectAt(0).type, 'foo');
+    assert.equal(this.component.backMarkers.objectAt(0).segmentCount, 2);
+    assert.equal(this.component.backMarkers.objectAt(1).type, 'bar');
+    assert.equal(this.component.backMarkers.objectAt(1).segmentCount, 1);
 
     run(() => this.set('markers', [{ class: 'baz', range: new Range(1, 0, 1, 1), inFront: false }]));
-    assert.equal(this.component.backMarkers().count, 1);
-    assert.equal(this.component.backMarkers(0).type, 'baz');
-    assert.equal(this.component.backMarkers(0).segmentCount, 1);
+    assert.equal(this.component.backMarkers.length, 1);
+    assert.equal(this.component.backMarkers.objectAt(0).type, 'baz');
+    assert.equal(this.component.backMarkers.objectAt(0).segmentCount, 1);
 
     run(() => this.set('markers', []));
-    assert.equal(this.component.backMarkers().count, 0);
+    assert.equal(this.component.backMarkers.length, 0);
   });
 
   test('overlays', async function(assert) {
@@ -154,26 +154,26 @@ module('Integration | Component | ember ace', function(hooks) {
     ]);
 
     await render(hbs`{{ember-ace lines=3 overlays=overlays value=value}}`);
-    assert.equal(this.component.annotations().count, 2);
-    assert.equal(this.component.frontMarkers().count, 2);
-    assert.equal(this.component.backMarkers().count, 0);
+    assert.equal(this.component.annotations.length, 2);
+    assert.equal(this.component.frontMarkers.length, 2);
+    assert.equal(this.component.backMarkers.length, 0);
 
-    assert.equal(this.component.annotations(0).type, 'error');
-    assert.equal(this.component.annotations(0).row, 0);
-    assert.equal(this.component.frontMarkers(0).type, 'ember-ace-error');
-    assert.equal(this.component.frontMarkers(0).segmentCount, 2);
+    assert.equal(this.component.annotations.objectAt(0).type, 'error');
+    assert.equal(this.component.annotations.objectAt(0).row, 0);
+    assert.equal(this.component.frontMarkers.objectAt(0).type, 'ember-ace-error');
+    assert.equal(this.component.frontMarkers.objectAt(0).segmentCount, 2);
 
-    assert.equal(this.component.annotations(1).type, 'info');
-    assert.equal(this.component.annotations(1).row, 2);
-    assert.equal(this.component.frontMarkers(1).type, 'ember-ace-info');
-    assert.equal(this.component.frontMarkers(1).segmentCount, 1);
+    assert.equal(this.component.annotations.objectAt(1).type, 'info');
+    assert.equal(this.component.annotations.objectAt(1).row, 2);
+    assert.equal(this.component.frontMarkers.objectAt(1).type, 'ember-ace-info');
+    assert.equal(this.component.frontMarkers.objectAt(1).segmentCount, 1);
   });
 
   test('basic autocomplete', async function(assert) {
     this.set('suggestCompletions', (editor, session, position, prefix) => {
       return [
         { value: `${prefix}abc`, caption: 'lhs', meta: 'rhs' },
-        { value: `${prefix}def`, caption: 'lhs2', meta: 'rhs2' },
+        { value: `${prefix}def`, caption: 'foo', meta: 'bar' },
       ];
     });
 
@@ -181,14 +181,14 @@ module('Integration | Component | ember ace', function(hooks) {
     const { autocomplete } = this.component;
 
     await autocomplete.trigger();
-    assert.deepEqual(autocomplete.suggestions().mapBy('caption'), ['lhs', 'lhs2']);
-    assert.deepEqual(autocomplete.suggestions().mapBy('meta'), ['rhs', 'rhs2']);
-    assert.deepEqual(autocomplete.suggestions().mapBy('selected'), [true, false]);
-
+    assert.deepEqual(autocomplete.suggestions.mapBy('caption'), ['lhs', 'foo']);
+    assert.deepEqual(autocomplete.suggestions.mapBy('meta'), ['rhs', 'bar']);
+    assert.equal(autocomplete.focusedIndex, 0);
     assert.equal(autocomplete.focusedSuggestion.caption, 'lhs');
-    await autocomplete.focusNext();
 
-    assert.equal(autocomplete.focusedSuggestion.caption, 'lhs2');
+    await autocomplete.focusNext();
+    assert.equal(autocomplete.focusedIndex, 1);
+    assert.equal(autocomplete.focusedSuggestion.caption, 'foo');
     autocomplete.selectFocused();
 
     assert.equal(this.component.value, 'deftext');
@@ -200,7 +200,7 @@ module('Integration | Component | ember ace', function(hooks) {
     this.set('suggestCompletions', (editor, session, position, prefix) => {
       return [
         { value: `${prefix}abc`, caption: 'lhs', meta: 'rhs', extra: 'key1' },
-        { value: `${prefix}def`, caption: 'lhs2', meta: 'rhs2', extra: 'key2' },
+        { value: `${prefix}def`, caption: 'foo', meta: 'bar', extra: 'key2' },
       ];
     });
 
@@ -233,8 +233,8 @@ module('Integration | Component | ember ace', function(hooks) {
     this.set('mode', new NumberMode());
     this.set('value', 'abc 123\n!@# 456 foo');
     await render(hbs`{{ember-ace mode=mode value=value}}`);
-    assert.deepEqual(this.component.lines(0).tokens().mapBy('type'), ['other', 'constant.numeric']);
-    assert.deepEqual(this.component.lines(1).tokens().mapBy('type'), ['other', 'constant.numeric', 'other']);
+    assert.deepEqual(this.component.lines.objectAt(0).tokens.mapBy('type'), ['other', 'constant.numeric']);
+    assert.deepEqual(this.component.lines.objectAt(1).tokens.mapBy('type'), ['other', 'constant.numeric', 'other']);
 
     const VariableMode = makeMode({
       start: [
@@ -244,8 +244,8 @@ module('Integration | Component | ember ace', function(hooks) {
     });
 
     run(() => this.set('mode', new VariableMode()));
-    assert.deepEqual(this.component.lines(0).tokens().mapBy('type'), ['variable', 'other']);
-    assert.deepEqual(this.component.lines(1).tokens().mapBy('type'), ['other', 'variable']);
+    assert.deepEqual(this.component.lines.objectAt(0).tokens.mapBy('type'), ['variable', 'other']);
+    assert.deepEqual(this.component.lines.objectAt(1).tokens.mapBy('type'), ['other', 'variable']);
   });
 
   function makeMode(rules) {

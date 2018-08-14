@@ -35,10 +35,7 @@ export default {
   /**
    * A collection of lines making up the editor contents.
    */
-  lines: collection({
-    itemScope: '.ace_line',
-    item: line
-  }),
+  lines: collection('.ace_line', line),
 
   /**
    * The autocomplete dropdown box.
@@ -48,26 +45,15 @@ export default {
   /**
    * A collection of line gutter annotations.
    */
-  annotations: collection({
-    itemScope: '.ace_gutter-cell:not([class$=" "])',
-    item: annotation
-  }),
+  annotations: collection('.ace_gutter-cell:not([class$=" "])', annotation),
 
   /**
    * A collection of markers overlaying text.
    */
-  frontMarkers: collection({
-    scope: '.ace_layer:nth-child(4)',
-    itemScope: '.ace_start',
-    item: marker
-  }),
+  frontMarkers: collection('.ace_layer:nth-child(4) .ace_start', marker),
 
   /**
    * A collection of markers underlaying text.
    */
-  backMarkers: collection({
-    scope: '.ace_layer:nth-child(2)',
-    itemScope: '.ace_start:not(.ace_selection)',
-    item: marker
-  })
+  backMarkers: collection('.ace_layer:nth-child(2) .ace_start:not(.ace_selection)', marker),
 };
