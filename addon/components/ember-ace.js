@@ -212,6 +212,7 @@ const ACE_HANDLERS = Object.freeze({
   readOnly: 'editor',
   minLines: 'editor',
   maxLines: 'editor',
+  showLineNumbers: 'editor',
 
   enableBasicAutocompletion: 'editor',
   enableLiveAutocompletion: 'editor',
@@ -219,7 +220,6 @@ const ACE_HANDLERS = Object.freeze({
   tabSize: 'session',
   useSoftTabs: 'session',
 
-  showLineNumbers: 'renderer',
   showGutter: 'renderer',
 
   markers(editor, newValue) {

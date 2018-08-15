@@ -10,8 +10,5 @@ export default {
   /**
    * A collection of tokens from which this line is composed.
    */
-  tokens: collection({
-    itemScope: '>',
-    item: token
-  })
+  tokens: collection('>', token),
 };

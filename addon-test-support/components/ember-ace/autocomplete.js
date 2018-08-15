@@ -1,22 +1,14 @@
 import pollCondition from 'ember-ace/test-support/helpers/poll-condition';
 import editorInteraction from 'ember-ace/test-support/helpers/editor-interaction';
-import { text, collection, is, isVisible } from 'ember-cli-page-object';
+import { text, collection, isVisible } from 'ember-cli-page-object';
 
 /**
  * A suggestion in the autocomplete list, with a caption on the left
  * and metadata on the right.
  */
 export const suggestion = {
-  selected: is('.ace_selected'),
-
-  caption: {
-    isDescriptor: true,
-    get() {
-      return this.text.slice(0, -this.meta.length);
-    }
-  },
-
-  meta: text('.ace_rightAlignedText'),
+  caption: text('.ace_'),
+  meta: text('.ace_completion-meta'),
 };
 
 /**
@@ -72,14 +64,9 @@ export default {
    */
   focusedIndex: {
     isDescriptor: true,
-    get() {
-      for (let i = 0, len = this.suggestions().count; i < len; i++) {
-        if (this.suggestions(i).selected) {
-          return i;
-        }
-      }
-      return -1;
-    }
+    get: editorInteraction((editor) => {
+      return editor.completer.popup.getRow();
+    })
   },
 
   /**
@@ -88,20 +75,17 @@ export default {
   focusedSuggestion: {
     isDescriptor: true,
     get() {
-      return this.suggestions(this.focusedIndex);
+      return this.suggestions.objectAt(this.focusedIndex);
     }
   },
 
   /**
    * The list of active suggestions.
    */
-  suggestions: collection({
+  suggestions: collection('.ace_autocomplete .ace_line', Object.assign({
     resetScope: true,
     testContainer: 'body',
-    scope: '.ace_autocomplete',
-    itemScope: '.ace_line',
-    item: suggestion,
-  }),
+  }, suggestion)),
 
   /**
    * The active suggestion tooltip.
