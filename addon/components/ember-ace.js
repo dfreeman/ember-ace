@@ -86,11 +86,11 @@ export default Component.extend({
   _instantiateEditor() {
     const editor = this.editor = ace.edit(this.element.querySelector('[data-ember-ace]'));
 
+    this._syncAceProperties();
+
     // Avoid a deprecation warning from Ace
     editor.$blockScrolling = Infinity;
     editor.completers = this._buildCompleters(editor);
-
-    this._syncAceProperties();
 
     const originalSetValue = editor.setValue;
     editor.setValue = (...args) => {
