@@ -1,3 +1,7 @@
+## 2.0.1 (September 10, 2018)
+### Fixed
+The `enableDefaultAutocompletion` option now actually, well, works. See [#29](https://github.com/dfreeman/ember-ace/issues/29).
+
 ## 2.0.0 (August 14, 2018)
 ### Changed
 - Updated to the latest `ace-builds` release
