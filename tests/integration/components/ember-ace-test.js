@@ -169,6 +169,21 @@ module('Integration | Component | ember ace', function(hooks) {
     assert.equal(this.component.frontMarkers.objectAt(1).segmentCount, 1);
   });
 
+  test('default autocomplete', async function(assert) {
+    this.set('value', 'foo\nbar\nf');
+    await render(hbs`{{ember-ace lines=3 value=value enableDefaultAutocompletion=true}}`);
+
+    const { autocomplete } = this.component;
+
+    this.component.moveCursorTo(2, 1);
+
+    await autocomplete.trigger();
+    assert.deepEqual(autocomplete.suggestions.mapBy('caption'), ['oo']);
+
+    await autocomplete.selectFocused();
+    assert.equal(this.component.value, 'foo\nbar\nfoo');
+  });
+
   test('basic autocomplete', async function(assert) {
     this.set('suggestCompletions', (editor, session, position, prefix) => {
       return [
