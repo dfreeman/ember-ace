@@ -1,4 +1,5 @@
 'use strict';
+// eslint-disable-next-line node/no-unpublished-require
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = {
