@@ -1,4 +1,5 @@
 'use strict';
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = {
   name: 'ember-ace',
@@ -22,7 +23,7 @@ module.exports = {
 
   treeForAddon: function(tree) {
     var WorkerManifest = require('./lib/worker-manifest');
-    var rootURL = this.project.config(this.env).rootURL;
+    var rootURL = this.project.config(EmberApp.env()).rootURL;
     var manifest = new WorkerManifest({
       workerPaths: calculateWorkerPaths(this.aceOptions, rootURL)
     });
