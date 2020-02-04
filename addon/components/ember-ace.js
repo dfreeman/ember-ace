@@ -1,8 +1,9 @@
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { map } from '@ember/object/computed';
 import { run } from '@ember/runloop';
 import { warn } from '@ember/debug';
-import { computed } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
-import Component from '@ember/component';
 import CompletionManager from 'ember-ace/utils/completion-manager';
 import layout from 'ember-ace/templates/components/ember-ace';
 import ace from 'ember-ace';
@@ -22,6 +23,7 @@ export default Component.extend({
   readOnly: false,
   showLineNumbers: true,
   showGutter: true,
+  overlays: null,
 
   maxLines: undefined,
   minLines: undefined,
@@ -43,24 +45,20 @@ export default Component.extend({
     }
   }),
 
-  overlays: computed(() => []),
-
-  markers: computed('overlays.[]', function() {
-    const overlays = this.get('overlays') || [];
-    return overlays.map((overlay) => ({
+  markers: map('overlays', function(overlay) {
+    return {
       class: `ember-ace-${overlay.type} ${overlay.class || ''}`,
       range: overlay.range,
       inFront: overlay.hasOwnProperty('inFront') ? overlay.inFront : true,
-    }));
+    };
   }),
 
-  annotations: computed('overlays.[]', function() {
-    const overlays = this.get('overlays') || [];
-    return overlays.map((overlay) => ({
+  annotations: map('overlays', function(overlay) {
+    return {
       type: overlay.type,
       text: overlay.text,
       row: overlay.range.start.row,
-    }));
+    };
   }),
 
   init() {

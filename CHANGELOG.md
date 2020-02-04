@@ -1,3 +1,7 @@
+## 2.1.0 (February 5, 2020)
+### Fixed
+Silenced computed property override deprecations
+
 ## 2.0.1 (September 10, 2018)
 ### Fixed
 The `enableDefaultAutocompletion` option now actually, well, works. See [#29](https://github.com/dfreeman/ember-ace/issues/29).
