@@ -36,9 +36,11 @@ export default Component.extend({
     if (enableDefault || suggestCompletions) {
       return HAS_LANGUAGE_TOOLS || emitLanguageToolsWarning();
     }
+    return undefined;
   }),
 
   lines: computed({
+    /* eslint-disable-next-line ember/require-return-from-computed */
     set(key, value) {
       this.set('minLines', value);
       this.set('maxLines', value);
@@ -136,6 +138,7 @@ export default Component.extend({
     });
 
     // Render within this run loop, for consistency with Ember's normal component rendering flow
+    /* eslint-disable-next-line ember/no-incorrect-calls-with-inline-anonymous-functions */
     run.scheduleOnce('render', this, () => this.editor.renderer.updateFull(true));
   },
 
