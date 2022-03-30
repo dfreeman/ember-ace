@@ -1,4 +1,6 @@
 'use strict';
+// eslint-disable-next-line node/no-unpublished-require
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = {
   name: 'ember-ace',
@@ -22,8 +24,9 @@ module.exports = {
 
   treeForAddon: function(tree) {
     var WorkerManifest = require('./lib/worker-manifest');
+    var rootURL = this.project.config(EmberApp.env()).rootURL;
     var manifest = new WorkerManifest({
-      workerPaths: calculateWorkerPaths(this.aceOptions)
+      workerPaths: calculateWorkerPaths(this.aceOptions, rootURL)
     });
 
     var merged = require('broccoli-merge-trees')([tree, manifest]);
@@ -54,10 +57,10 @@ function calculatePublicFiles(options) {
   }
 }
 
-function calculateWorkerPaths(options) {
+function calculateWorkerPaths(options, appRootURL) {
   var workers = {};
   if (options.workers) {
-    var workerPath = options.workerPath || '/assets/ace';
+    var workerPath = options.workerPath || `${appRootURL}assets/ace`;
     options.workers.forEach(function(name) {
       workers['ace/mode/' + name + '_worker'] = workerPath + '/worker-' + name + '.js';
     });
