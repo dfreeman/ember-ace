@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-ace',
+  name: require('./package').name,
 
   options: {
     nodeAssets: {
@@ -11,8 +11,8 @@ module.exports = {
           import: calculateImports(this.aceOptions),
           public: calculatePublicFiles(this.aceOptions)
         };
-      }
-    }
+      },
+    },
   },
 
   included: function(parent) {

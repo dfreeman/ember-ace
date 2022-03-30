@@ -1,7 +1,6 @@
-<style>
-  .ember-ace-error { background-color: rgba(255, 0, 0, 0.5); position: absolute; }
-  .ember-ace-warning { background-color: rgba(200, 200, 0, 0.5); position: absolute; }
-</style>
+{{page-title 'Dummy'}}
+
+<h2 id='title'>Welcome to Ember</h2>
 
 {{#ember-ace
   lines=10
@@ -21,7 +20,8 @@
   as |editor|
 }}
   {{#editor.completion-tooltip as |suggestion|}}
-    Caption: {{suggestion.caption}}
+    Caption:
+    {{suggestion.caption}}
   {{/editor.completion-tooltip}}
 {{/ember-ace}}
 
@@ -29,66 +29,64 @@
 
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{highlightActiveLine}}
     onchange={{action (mut highlightActiveLine) value='target.checked'}}
-  >
+  />
   highlightActiveLine
 </label>
 
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{showPrintMargin}}
     onchange={{action (mut showPrintMargin) value='target.checked'}}
-  >
+  />
   showPrintMargin
 </label>
 
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{readOnly}}
     onchange={{action (mut readOnly) value='target.checked'}}
-  >
+  />
   readOnly
 </label>
 
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{useSoftTabs}}
     onchange={{action (mut useSoftTabs) value='target.checked'}}
-  >
+  />
   useSoftTabs
 </label>
 
-
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{useWrapMode}}
     onchange={{action (mut useWrapMode) value='target.checked'}}
-  >
+  />
   useWrapMode
 </label>
 
-
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{showInvisibles}}
     onchange={{action (mut showInvisibles) value='target.checked'}}
-  >
+  />
   showInvisibles
 </label>
 
 <label>
   <input
-    type="checkbox"
+    type='checkbox'
     checked={{showGutter}}
     onchange={{action (mut showGutter) value='target.checked'}}
-  >
+  />
   showGutter
 </label>
 
@@ -103,22 +101,22 @@
 
 <label>
   <input
-    type="number"
+    type='number'
     value={{tabSize}}
     onchange={{action (mut tabSize) value='target.value'}}
-  >
+  />
   tabSize
 </label>
 
 <h3>Overlay</h3>
-<div style="display: flex; flex-flow: column">
+<div style='display: flex; flex-flow: column'>
   <label>
     text
     <input
-      type="text"
+      type='text'
       value={{overlay.text}}
       oninput={{action (mut overlay.text) value='target.value'}}
-    >
+    />
   </label>
 
   <label>
@@ -133,36 +131,36 @@
   <label>
     start row
     <input
-      type="number"
+      type='number'
       value={{overlay.range.start.row}}
       oninput={{action (mut overlay.range.start.row) value='target.value'}}
-    >
+    />
   </label>
 
   <label>
     start column
     <input
-      type="number"
+      type='number'
       value={{overlay.range.start.column}}
       oninput={{action (mut overlay.range.start.column) value='target.value'}}
-    >
+    />
   </label>
 
   <label>
     end row
     <input
-      type="number"
+      type='number'
       value={{overlay.range.end.row}}
       oninput={{action (mut overlay.range.end.row) value='target.value'}}
-    >
+    />
   </label>
 
   <label>
     end column
     <input
-      type="number"
+      type='number'
       value={{overlay.range.end.column}}
       oninput={{action (mut overlay.range.end.column) value='target.value'}}
-    >
+    />
   </label>
 </div>
