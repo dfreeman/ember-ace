@@ -4,12 +4,9 @@ import { warn } from '@ember/debug';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import CompletionManager from 'ember-ace/utils/completion-manager';
-import layout from 'ember-ace/templates/components/ember-ace';
 import ace from 'ember-ace';
 
 export default Component.extend({
-  layout,
-
   mode: undefined,
   theme: undefined,
   useSoftTabs: true,
