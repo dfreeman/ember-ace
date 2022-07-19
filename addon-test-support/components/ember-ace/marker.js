@@ -8,7 +8,7 @@ export default {
     isDescriptor: true,
     get() {
       return findElementWithAssert(this).attr('class').split(/\s+/)[0];
-    }
+    },
   },
 
   /**
@@ -23,13 +23,16 @@ export default {
       let count = 1;
 
       while ((sibling = sibling.nextElementSibling)) {
-        if (!sibling.classList.contains(type) || sibling.classList.contains('ace_start')) {
+        if (
+          !sibling.classList.contains(type) ||
+          sibling.classList.contains('ace_start')
+        ) {
           break;
         }
         count++;
       }
 
       return count;
-    }
-  }
+    },
+  },
 };

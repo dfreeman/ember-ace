@@ -17,7 +17,7 @@ export default {
     get() {
       const $el = findElementWithAssert(this);
       const classes = $el.attr('class').split(/\s+/);
-      return classes.map(cls => cls.replace(/^ace_/, '')).join('.');
-    }
-  }
+      return classes.map((cls) => cls.replace(/^ace_/, '')).join('.');
+    },
+  },
 };

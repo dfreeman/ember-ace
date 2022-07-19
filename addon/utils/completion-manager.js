@@ -20,14 +20,16 @@ export default class CompletionManager {
 
     let promise;
     try {
-      promise = run(() => suggestCompletions(editor, session, position, prefix));
+      promise = run(() =>
+        suggestCompletions(editor, session, position, prefix)
+      );
     } catch (error) {
       promise = RSVP.reject(error);
     }
 
     RSVP.resolve(promise)
-      .then(results => callback(null, results))
-      .catch(error => callback(error));
+      .then((results) => callback(null, results))
+      .catch((error) => callback(error));
   }
 
   getDocTooltip(result) {

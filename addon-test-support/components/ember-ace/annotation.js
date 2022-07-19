@@ -9,7 +9,7 @@ export default {
     get() {
       const classes = findElementWithAssert(this).attr('class').split(/\s+/);
       return classes[classes.length - 1].replace(/^ace_/, '');
-    }
+    },
   },
 
   /**
@@ -20,6 +20,6 @@ export default {
     get() {
       const el = findElementWithAssert(this)[0];
       return [].slice.call(el.parentElement.children).indexOf(el);
-    }
-  }
+    },
+  },
 };

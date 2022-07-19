@@ -14,7 +14,7 @@ export default {
     isDescriptor: true,
     get: editorInteraction((editor) => {
       return editor.getValue();
-    })
+    }),
   },
 
   /**
@@ -55,5 +55,8 @@ export default {
   /**
    * A collection of markers underlaying text.
    */
-  backMarkers: collection('.ace_layer:nth-child(2) .ace_start:not(.ace_selection)', marker),
+  backMarkers: collection(
+    '.ace_layer:nth-child(2) .ace_start:not(.ace_selection)',
+    marker
+  ),
 };

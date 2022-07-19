@@ -1,43 +1,70 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { Range } from 'ember-ace';
 
-export default Controller.extend({
-  value: 'one two three\nfour five size\nseven eight nine',
+export default class ApplicationController extends Controller {
+  @tracked value = 'one two three\nfour five size\nseven eight nine';
 
-  highlightActiveLine: true,
-  showPrintMargin: true,
-  readOnly: false,
+  @tracked highlightActiveLine = true;
+  @tracked showPrintMargin = true;
+  @tracked readOnly = false;
 
-  tabSize: 2,
-  useSoftTabs: true,
-  wrap: true,
-  showInvisibles: true,
-  showGutter: true,
+  @tracked tabSize = 2;
+  @tracked useSoftTabs = true;
+  @tracked wrap = true;
+  @tracked showInvisibles = true;
+  @tracked showGutter = true;
 
-  theme: 'ace/theme/textmate',
-  themes: Object.freeze([
+  @tracked theme = 'ace/theme/textmate';
+  @tracked themes = [
     'ace/theme/textmate',
     'ace/theme/ambiance',
     'ace/theme/chaos',
-  ]),
+  ];
 
-  overlay: Object.freeze({
-    type: 'warning',
-    text: 'by the way',
-    range: new Range(0, 4, 0, 7),
-  }),
+  @tracked overlayType = 'warning';
+  @tracked overlayText = 'by the way';
+  @tracked overlayStartRow = 0;
+  @tracked overlayStartCol = 4;
+  @tracked overlayEndRow = 0;
+  @tracked overlayEndCol = 7;
 
-  overlays: computed('overlay.{type,text}', 'overlay.range.{start,end}.{row,column}', function() {
-    return [this.get('overlay')];
-  }),
-
-  actions: {
-    suggestCompletions(editor, session, position, prefix) {
-      return [
-        { value: prefix + '111', snippet: 'one', meta: 'MetaOne', caption: 'The one', score: 1 },
-        { value: prefix + '222', snippet: 'two', meta: 'MetaTwo', caption: 'The two', score: 2 },
-      ];
-    }
+  get overlays() {
+    return [
+      {
+        type: this.overlayType,
+        text: this.overlayText,
+        range: new Range(
+          this.overlayStartRow,
+          this.overlayStartCol,
+          this.overlayEndRow,
+          this.overlayEndCol
+        ),
+      },
+    ];
   }
-});
+
+  @action syncInputValue(key, { target }) {
+    this[key] = target.type === 'checkbox' ? target.checked : target.value;
+  }
+
+  @action suggestCompletions(editor, session, position, prefix) {
+    return [
+      {
+        value: prefix + '111',
+        snippet: 'one',
+        meta: 'MetaOne',
+        caption: 'The one',
+        score: 1,
+      },
+      {
+        value: prefix + '222',
+        snippet: 'two',
+        meta: 'MetaTwo',
+        caption: 'The two',
+        score: 2,
+      },
+    ];
+  }
+}

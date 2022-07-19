@@ -1,10 +1,10 @@
 import RSVP from 'rsvp';
 
-export default async function pollCondition(message, callback, {
-  maxTries = 50,
-  interval = 5,
-} = {}) {
-
+export default async function pollCondition(
+  message,
+  callback,
+  { maxTries = 50, interval = 5 } = {}
+) {
   for (let tries = 0; tries < maxTries; tries++) {
     try {
       const result = callback();
@@ -15,7 +15,7 @@ export default async function pollCondition(message, callback, {
       // If the callback explodes, consider that a failure of the condition
     }
 
-    await new RSVP.Promise(resolve => setTimeout(resolve, interval));
+    await new RSVP.Promise((resolve) => setTimeout(resolve, interval));
   }
 
   throw new Error(`Condition failed to come true: ${message}`);

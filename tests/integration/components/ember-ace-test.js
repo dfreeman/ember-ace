@@ -2,176 +2,196 @@ import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import {
-  TextMode,
-  TextHighlightRules,
-  Range
-} from 'ember-ace';
+import { TextMode, TextHighlightRules, Range } from 'ember-ace';
 import PageObject from 'ember-cli-page-object';
 import pollCondition from 'ember-ace/test-support/helpers/poll-condition';
 import aceComponent from 'ember-ace/test-support/components/ember-ace';
 import hbs from 'htmlbars-inline-precompile';
 import sinon from 'sinon';
 
-module('Integration | Component | ember ace', function(hooks) {
+module('Integration | Component | ember ace', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.component = PageObject.create(aceComponent);
   });
 
-  test('rendering a given value', async function(assert) {
+  test('rendering a given value', async function (assert) {
     this.set('value', 'function() {\n  console.log("hi");\n}');
     await render(hbs`{{ember-ace lines=3 value=this.value}}`);
 
-    assert.equal(this.component.lines.length, 3);
-    assert.equal(this.component.value, this.get('value'));
+    assert.strictEqual(this.component.lines.length, 3);
+    assert.strictEqual(this.component.value, this.value);
 
     run(() => this.set('value', '// nevermind'));
-    assert.equal(this.component.lines.length, 1);
-    assert.equal(this.component.value, this.get('value'));
+    assert.strictEqual(this.component.lines.length, 1);
+    assert.strictEqual(this.component.value, this.value);
   });
 
-  test('leading, trailing and internal whitespace', async function(assert) {
+  test('leading, trailing and internal whitespace', async function (assert) {
     this.set('value', '\n\na\n  \nb\n\n');
     await render(hbs`{{ember-ace lines=10 value=this.value}}`);
 
-    assert.equal(this.component.lines.length, 7);
-    assert.equal(this.component.value, this.get('value'));
+    assert.strictEqual(this.component.lines.length, 7);
+    assert.strictEqual(this.component.value, this.value);
   });
 
-  test('internal value updates', async function(assert) {
+  test('internal value updates', async function (assert) {
     this.set('change', sinon.spy());
     await render(hbs`{{ember-ace lines=1 update=(action this.change)}}`);
 
     this.component.setValue('hello');
-    assert.ok(this.get('change').calledWith('hello'));
-    assert.equal(this.get('change.callCount'), 1);
-    assert.equal(this.component.value, 'hello');
+    assert.ok(this.change.calledWith('hello'));
+    assert.strictEqual(this.change.callCount, 1);
+    assert.strictEqual(this.component.value, 'hello');
   });
 
-  test('internal value updates with initial value', async function(assert) {
+  test('internal value updates with initial value', async function (assert) {
     this.set('value', 'one');
     this.set('change', sinon.spy());
     await render(hbs`{{ember-ace lines=1 update=(action this.change)}}`);
 
     this.component.setValue('two');
-    assert.equal(this.get('change.callCount'), 1);
-    assert.equal(this.component.value, 'two');
+    assert.strictEqual(this.change.callCount, 1);
+    assert.strictEqual(this.component.value, 'two');
 
     this.component.setValue('');
-    assert.equal(this.get('change.callCount'), 2);
-    assert.equal(this.component.value, '');
+    assert.strictEqual(this.change.callCount, 2);
+    assert.strictEqual(this.component.value, '');
   });
 
-  test('external value updates', async function(assert) {
+  test('external value updates', async function (assert) {
     this.set('value', 'one');
     this.set('change', sinon.spy());
-    await render(hbs`{{ember-ace lines=1 value=this.value update=(action this.change)}}`);
+    await render(
+      hbs`{{ember-ace lines=1 value=this.value update=(action this.change)}}`
+    );
 
     run(() => this.set('value', 'two'));
-    assert.equal(this.get('change.callCount'), 0);
-    assert.equal(this.component.value, 'two');
+    assert.strictEqual(this.change.callCount, 0);
+    assert.strictEqual(this.component.value, 'two');
   });
 
-  test('setting a theme', async function(assert) {
+  test('setting a theme', async function (assert) {
     this.set('theme', 'ace/theme/ambiance');
     await render(hbs`{{ember-ace theme=this.theme}}`);
-    assert.ok(this.$('.ace_editor').is('.ace-ambiance'));
+    assert.dom('.ace_editor').hasClass('ace-ambiance');
 
     run(() => this.set('theme', 'ace/theme/chaos'));
-    assert.ok(this.$('.ace_editor').is('.ace-chaos'));
+    assert.dom('.ace_editor').hasClass('ace-chaos');
   });
 
-  test('annotating lines', async function(assert) {
+  test('annotating lines', async function (assert) {
     this.set('annotations', [{ type: 'warning', row: 1 }]);
     this.set('value', 'hello\nworld');
-    await render(hbs`{{ember-ace lines=3 annotations=this.annotations value=this.value}}`);
-    assert.equal(this.component.annotations.length, 1);
-    assert.equal(this.component.annotations.objectAt(0).type, 'warning');
-    assert.equal(this.component.annotations.objectAt(0).row, 1);
+    await render(
+      hbs`{{ember-ace lines=3 annotations=this.annotations value=this.value}}`
+    );
+    assert.strictEqual(this.component.annotations.length, 1);
+    assert.strictEqual(this.component.annotations.objectAt(0).type, 'warning');
+    assert.strictEqual(this.component.annotations.objectAt(0).row, 1);
 
     run(() => this.set('annotations', [{ type: 'error', row: 0 }]));
-    assert.equal(this.component.annotations.length, 1);
-    assert.equal(this.component.annotations.objectAt(0).type, 'error');
-    assert.equal(this.component.annotations.objectAt(0).row, 0);
+    assert.strictEqual(this.component.annotations.length, 1);
+    assert.strictEqual(this.component.annotations.objectAt(0).type, 'error');
+    assert.strictEqual(this.component.annotations.objectAt(0).row, 0);
 
     run(() => this.set('annotations', []));
-    assert.equal(this.component.annotations.length, 0);
+    assert.strictEqual(this.component.annotations.length, 0);
   });
 
-  test('front range markers', async function(assert) {
+  test('front range markers', async function (assert) {
     this.set('value', 'hello\neveryone\nin the world');
     this.set('markers', [
       { class: 'foo', range: new Range(0, 0, 1, 1) },
-      { class: 'bar', range: new Range(2, 0, 2, 5) }
+      { class: 'bar', range: new Range(2, 0, 2, 5) },
     ]);
-    await render(hbs`{{ember-ace lines=3 markers=this.markers value=this.value}}`);
-    assert.equal(this.component.backMarkers.length, 0);
-    assert.equal(this.component.frontMarkers.length, 2);
-    assert.equal(this.component.frontMarkers.objectAt(0).type, 'foo');
-    assert.equal(this.component.frontMarkers.objectAt(0).segmentCount, 2);
-    assert.equal(this.component.frontMarkers.objectAt(1).type, 'bar');
-    assert.equal(this.component.frontMarkers.objectAt(1).segmentCount, 1);
+    await render(
+      hbs`{{ember-ace lines=3 markers=this.markers value=this.value}}`
+    );
+    assert.strictEqual(this.component.backMarkers.length, 0);
+    assert.strictEqual(this.component.frontMarkers.length, 2);
+    assert.strictEqual(this.component.frontMarkers.objectAt(0).type, 'foo');
+    assert.strictEqual(this.component.frontMarkers.objectAt(0).segmentCount, 2);
+    assert.strictEqual(this.component.frontMarkers.objectAt(1).type, 'bar');
+    assert.strictEqual(this.component.frontMarkers.objectAt(1).segmentCount, 1);
 
-    run(() => this.set('markers', [{ class: 'baz', range: new Range(1, 0, 1, 1) }]));
-    assert.equal(this.component.frontMarkers.length, 1);
-    assert.equal(this.component.frontMarkers.objectAt(0).type, 'baz');
-    assert.equal(this.component.frontMarkers.objectAt(0).segmentCount, 1);
+    run(() =>
+      this.set('markers', [{ class: 'baz', range: new Range(1, 0, 1, 1) }])
+    );
+    assert.strictEqual(this.component.frontMarkers.length, 1);
+    assert.strictEqual(this.component.frontMarkers.objectAt(0).type, 'baz');
+    assert.strictEqual(this.component.frontMarkers.objectAt(0).segmentCount, 1);
 
     run(() => this.set('markers', []));
-    assert.equal(this.component.frontMarkers.length, 0);
+    assert.strictEqual(this.component.frontMarkers.length, 0);
   });
 
-  test('back range markers', async function(assert) {
+  test('back range markers', async function (assert) {
     this.set('value', 'hello\neveryone\nin the world');
     this.set('markers', [
       { class: 'foo', range: new Range(0, 0, 1, 1), inFront: false },
-      { class: 'bar', range: new Range(2, 0, 2, 5), inFront: false }
+      { class: 'bar', range: new Range(2, 0, 2, 5), inFront: false },
     ]);
-    await render(hbs`{{ember-ace lines=3 markers=this.markers value=this.value}}`);
-    assert.equal(this.component.frontMarkers.length, 0);
-    assert.equal(this.component.backMarkers.length, 2);
-    assert.equal(this.component.backMarkers.objectAt(0).type, 'foo');
-    assert.equal(this.component.backMarkers.objectAt(0).segmentCount, 2);
-    assert.equal(this.component.backMarkers.objectAt(1).type, 'bar');
-    assert.equal(this.component.backMarkers.objectAt(1).segmentCount, 1);
+    await render(
+      hbs`{{ember-ace lines=3 markers=this.markers value=this.value}}`
+    );
+    assert.strictEqual(this.component.frontMarkers.length, 0);
+    assert.strictEqual(this.component.backMarkers.length, 2);
+    assert.strictEqual(this.component.backMarkers.objectAt(0).type, 'foo');
+    assert.strictEqual(this.component.backMarkers.objectAt(0).segmentCount, 2);
+    assert.strictEqual(this.component.backMarkers.objectAt(1).type, 'bar');
+    assert.strictEqual(this.component.backMarkers.objectAt(1).segmentCount, 1);
 
-    run(() => this.set('markers', [{ class: 'baz', range: new Range(1, 0, 1, 1), inFront: false }]));
-    assert.equal(this.component.backMarkers.length, 1);
-    assert.equal(this.component.backMarkers.objectAt(0).type, 'baz');
-    assert.equal(this.component.backMarkers.objectAt(0).segmentCount, 1);
+    run(() =>
+      this.set('markers', [
+        { class: 'baz', range: new Range(1, 0, 1, 1), inFront: false },
+      ])
+    );
+    assert.strictEqual(this.component.backMarkers.length, 1);
+    assert.strictEqual(this.component.backMarkers.objectAt(0).type, 'baz');
+    assert.strictEqual(this.component.backMarkers.objectAt(0).segmentCount, 1);
 
     run(() => this.set('markers', []));
-    assert.equal(this.component.backMarkers.length, 0);
+    assert.strictEqual(this.component.backMarkers.length, 0);
   });
 
-  test('overlays', async function(assert) {
+  test('overlays', async function (assert) {
     this.set('value', 'hellow\neveryone\nin the world');
     this.set('overlays', [
       { type: 'error', range: new Range(0, 0, 1, 1), text: 'ruh roh' },
-      { type: 'info', range: new Range(2, 0, 2, 5), text: 'btw' }
+      { type: 'info', range: new Range(2, 0, 2, 5), text: 'btw' },
     ]);
 
-    await render(hbs`{{ember-ace lines=3 overlays=this.overlays value=this.value}}`);
-    assert.equal(this.component.annotations.length, 2);
-    assert.equal(this.component.frontMarkers.length, 2);
-    assert.equal(this.component.backMarkers.length, 0);
+    await render(
+      hbs`{{ember-ace lines=3 overlays=this.overlays value=this.value}}`
+    );
+    assert.strictEqual(this.component.annotations.length, 2);
+    assert.strictEqual(this.component.frontMarkers.length, 2);
+    assert.strictEqual(this.component.backMarkers.length, 0);
 
-    assert.equal(this.component.annotations.objectAt(0).type, 'error');
-    assert.equal(this.component.annotations.objectAt(0).row, 0);
-    assert.equal(this.component.frontMarkers.objectAt(0).type, 'ember-ace-error');
-    assert.equal(this.component.frontMarkers.objectAt(0).segmentCount, 2);
+    assert.strictEqual(this.component.annotations.objectAt(0).type, 'error');
+    assert.strictEqual(this.component.annotations.objectAt(0).row, 0);
+    assert.strictEqual(
+      this.component.frontMarkers.objectAt(0).type,
+      'ember-ace-error'
+    );
+    assert.strictEqual(this.component.frontMarkers.objectAt(0).segmentCount, 2);
 
-    assert.equal(this.component.annotations.objectAt(1).type, 'info');
-    assert.equal(this.component.annotations.objectAt(1).row, 2);
-    assert.equal(this.component.frontMarkers.objectAt(1).type, 'ember-ace-info');
-    assert.equal(this.component.frontMarkers.objectAt(1).segmentCount, 1);
+    assert.strictEqual(this.component.annotations.objectAt(1).type, 'info');
+    assert.strictEqual(this.component.annotations.objectAt(1).row, 2);
+    assert.strictEqual(
+      this.component.frontMarkers.objectAt(1).type,
+      'ember-ace-info'
+    );
+    assert.strictEqual(this.component.frontMarkers.objectAt(1).segmentCount, 1);
   });
 
-  test('default autocomplete', async function(assert) {
+  test('default autocomplete', async function (assert) {
     this.set('value', 'foo\nbar\nf');
-    await render(hbs`{{ember-ace lines=3 value=this.value enableDefaultAutocompletion=true}}`);
+    await render(
+      hbs`{{ember-ace lines=3 value=this.value enableDefaultAutocompletion=true}}`
+    );
 
     const { autocomplete } = this.component;
 
@@ -181,10 +201,10 @@ module('Integration | Component | ember ace', function(hooks) {
     assert.deepEqual(autocomplete.suggestions.mapBy('caption'), ['oo']);
 
     await autocomplete.selectFocused();
-    assert.equal(this.component.value, 'foo\nbar\nfoo');
+    assert.strictEqual(this.component.value, 'foo\nbar\nfoo');
   });
 
-  test('basic autocomplete', async function(assert) {
+  test('basic autocomplete', async function (assert) {
     this.set('suggestCompletions', (editor, session, position, prefix) => {
       return [
         { value: `${prefix}abc`, caption: 'lhs', meta: 'rhs' },
@@ -192,24 +212,26 @@ module('Integration | Component | ember ace', function(hooks) {
       ];
     });
 
-    await render(hbs`{{ember-ace lines=3 value='text' suggestCompletions=(action this.suggestCompletions)}}`);
+    await render(
+      hbs`{{ember-ace lines=3 value='text' suggestCompletions=(action this.suggestCompletions)}}`
+    );
     const { autocomplete } = this.component;
 
     await autocomplete.trigger();
     assert.deepEqual(autocomplete.suggestions.mapBy('caption'), ['lhs', 'foo']);
     assert.deepEqual(autocomplete.suggestions.mapBy('meta'), ['rhs', 'bar']);
-    assert.equal(autocomplete.focusedIndex, 0);
-    assert.equal(autocomplete.focusedSuggestion.caption, 'lhs');
+    assert.strictEqual(autocomplete.focusedIndex, 0);
+    assert.strictEqual(autocomplete.focusedSuggestion.caption, 'lhs');
 
     await autocomplete.focusNext();
-    assert.equal(autocomplete.focusedIndex, 1);
-    assert.equal(autocomplete.focusedSuggestion.caption, 'foo');
+    assert.strictEqual(autocomplete.focusedIndex, 1);
+    assert.strictEqual(autocomplete.focusedSuggestion.caption, 'foo');
     autocomplete.selectFocused();
 
-    assert.equal(this.component.value, 'deftext');
+    assert.strictEqual(this.component.value, 'deftext');
   });
 
-  test('autocomplete with tooltips', async function(assert) {
+  test('autocomplete with tooltips', async function (assert) {
     assert.expect(0);
 
     this.set('suggestCompletions', (editor, session, position, prefix) => {
@@ -231,36 +253,55 @@ module('Integration | Component | ember ace', function(hooks) {
     const { tooltip } = autocomplete;
 
     await autocomplete.trigger();
-    await pollCondition('tooltip rendered', () => tooltip.isVisible && tooltip.text === 'Payload: key1');
+    await pollCondition(
+      'tooltip rendered',
+      () => tooltip.isVisible && tooltip.text === 'Payload: key1'
+    );
 
     await autocomplete.focusNext();
-    await pollCondition('tooltip rendered', () => tooltip.isVisible && tooltip.text === 'Payload: key2');
+    await pollCondition(
+      'tooltip rendered',
+      () => tooltip.isVisible && tooltip.text === 'Payload: key2'
+    );
   });
 
-  test('setting a custom mode', async function(assert) {
+  test('setting a custom mode', async function (assert) {
     const NumberMode = makeMode({
       start: [
         { regex: '[-+]?[0-9]+', token: 'constant.numeric' },
-        { defaultToken: 'other' }
-      ]
+        { defaultToken: 'other' },
+      ],
     });
 
     this.set('mode', new NumberMode());
     this.set('value', 'abc 123\n!@# 456 foo');
     await render(hbs`{{ember-ace mode=this.mode value=this.value}}`);
-    assert.deepEqual(this.component.lines.objectAt(0).tokens.mapBy('type'), ['other', 'constant.numeric']);
-    assert.deepEqual(this.component.lines.objectAt(1).tokens.mapBy('type'), ['other', 'constant.numeric', 'other']);
+    assert.deepEqual(this.component.lines.objectAt(0).tokens.mapBy('type'), [
+      'other',
+      'constant.numeric',
+    ]);
+    assert.deepEqual(this.component.lines.objectAt(1).tokens.mapBy('type'), [
+      'other',
+      'constant.numeric',
+      'other',
+    ]);
 
     const VariableMode = makeMode({
       start: [
         { regex: '[a-zA-Z]+', token: 'variable' },
-        { defaultToken: 'other' }
-      ]
+        { defaultToken: 'other' },
+      ],
     });
 
     run(() => this.set('mode', new VariableMode()));
-    assert.deepEqual(this.component.lines.objectAt(0).tokens.mapBy('type'), ['variable', 'other']);
-    assert.deepEqual(this.component.lines.objectAt(1).tokens.mapBy('type'), ['other', 'variable']);
+    assert.deepEqual(this.component.lines.objectAt(0).tokens.mapBy('type'), [
+      'variable',
+      'other',
+    ]);
+    assert.deepEqual(this.component.lines.objectAt(1).tokens.mapBy('type'), [
+      'other',
+      'variable',
+    ]);
   });
 
   function makeMode(rules) {
@@ -272,8 +313,8 @@ module('Integration | Component | ember ace', function(hooks) {
             super();
             this.$rules = rules;
           }
-        }
+        };
       }
-    }
+    };
   }
 });

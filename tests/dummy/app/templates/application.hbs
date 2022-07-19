@@ -2,28 +2,28 @@
 
 <h2 id='title'>Welcome to Ember</h2>
 
-{{#ember-ace
-  lines=10
-  value=this.value
-  highlightActiveLine=this.highlightActiveLine
-  showPrintMargin=this.showPrintMargin
-  readOnly=this.readOnly
-  tabSize=this.tabSize
-  useSoftTabs=this.useSoftTabs
-  useWrapMode=this.useWrapMode
-  showInvisibles=this.showInvisibles
-  showGutter=this.showGutter
-  theme=this.theme
-  overlays=this.overlays
-  update=(action (mut this.value))
-  suggestCompletions=(action 'suggestCompletions')
+<EmberAce
+  @lines={{10}}
+  @value={{this.value}}
+  @highlightActiveLine={{this.highlightActiveLine}}
+  @showPrintMargin={{this.showPrintMargin}}
+  @readOnly={{this.readOnly}}
+  @tabSize={{this.tabSize}}
+  @useSoftTabs={{this.useSoftTabs}}
+  @useWrapMode={{this.useWrapMode}}
+  @showInvisibles={{this.showInvisibles}}
+  @showGutter={{this.showGutter}}
+  @theme={{this.theme}}
+  @overlays={{this.overlays}}
+  @update={{fn (mut this.value)}}
+  @suggestCompletions={{this.suggestCompletions}}
   as |editor|
-}}
-  {{#editor.completion-tooltip as |suggestion|}}
+>
+  <editor.completion-tooltip as |suggestion|>
     Caption:
     {{suggestion.caption}}
-  {{/editor.completion-tooltip}}
-{{/ember-ace}}
+  </editor.completion-tooltip>
+</EmberAce>
 
 <pre>{{this.value}}</pre>
 
@@ -31,7 +31,7 @@
   <input
     type='checkbox'
     checked={{this.highlightActiveLine}}
-    onchange={{action (mut this.highlightActiveLine) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'highlightActiveLine')}}
   />
   highlightActiveLine
 </label>
@@ -40,7 +40,7 @@
   <input
     type='checkbox'
     checked={{this.showPrintMargin}}
-    onchange={{action (mut this.showPrintMargin) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'showPrintMargin')}}
   />
   showPrintMargin
 </label>
@@ -49,7 +49,7 @@
   <input
     type='checkbox'
     checked={{this.readOnly}}
-    onchange={{action (mut this.readOnly) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'readOnly')}}
   />
   readOnly
 </label>
@@ -58,7 +58,7 @@
   <input
     type='checkbox'
     checked={{this.useSoftTabs}}
-    onchange={{action (mut this.useSoftTabs) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'useSoftTabs')}}
   />
   useSoftTabs
 </label>
@@ -67,7 +67,7 @@
   <input
     type='checkbox'
     checked={{this.useWrapMode}}
-    onchange={{action (mut this.useWrapMode) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'useWrapMode')}}
   />
   useWrapMode
 </label>
@@ -76,7 +76,7 @@
   <input
     type='checkbox'
     checked={{this.showInvisibles}}
-    onchange={{action (mut this.showInvisibles) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'showInvisibles')}}
   />
   showInvisibles
 </label>
@@ -85,13 +85,13 @@
   <input
     type='checkbox'
     checked={{this.showGutter}}
-    onchange={{action (mut this.showGutter) value='target.checked'}}
+    {{on 'change' (fn this.syncInputValue 'showGutter')}}
   />
   showGutter
 </label>
 
 <label>
-  <select onchange={{action (mut this.theme) value='target.value'}}>
+  <select {{on 'change' (fn this.syncInputValue 'theme')}}>
     {{#each this.themes as |theme|}}
       <option value={{theme}}>{{theme}}</option>
     {{/each}}
@@ -103,25 +103,26 @@
   <input
     type='number'
     value={{this.tabSize}}
-    onchange={{action (mut this.tabSize) value='target.value'}}
+    {{on 'change' (fn this.syncInputValue 'tabSize')}}
   />
   tabSize
 </label>
 
 <h3>Overlay</h3>
+{{! template-lint-disable no-inline-styles }}
 <div style='display: flex; flex-flow: column'>
   <label>
     text
     <input
       type='text'
-      value={{this.overlay.text}}
-      oninput={{action (mut this.overlay.text) value='target.value'}}
+      value={{this.overlayText}}
+      {{on 'input' (fn this.syncInputValue 'overlayText')}}
     />
   </label>
 
   <label>
     type
-    <select onchange={{action (mut this.overlay.type) value='target.value'}}>
+    <select {{on 'change' (fn this.syncInputValue 'overlayType')}}>
       <option value='error'>error</option>
       <option value='warning' selected>warning</option>
       <option value='info'>info</option>
@@ -132,8 +133,8 @@
     start row
     <input
       type='number'
-      value={{this.overlay.range.start.row}}
-      oninput={{action (mut this.overlay.range.start.row) value='target.value'}}
+      value={{this.overlayStartRow}}
+      {{on 'input' (fn this.syncInputValue 'overlayStartRow')}}
     />
   </label>
 
@@ -141,8 +142,8 @@
     start column
     <input
       type='number'
-      value={{this.overlay.range.start.column}}
-      oninput={{action (mut this.overlay.range.start.column) value='target.value'}}
+      value={{this.overlayStartCol}}
+      {{on 'input' (fn this.syncInputValue 'overlayStartCol')}}
     />
   </label>
 
@@ -150,8 +151,8 @@
     end row
     <input
       type='number'
-      value={{this.overlay.range.end.row}}
-      oninput={{action (mut this.overlay.range.end.row) value='target.value'}}
+      value={{this.overlayEndRow}}
+      {{on 'input' (fn this.syncInputValue 'overlayEndRow')}}
     />
   </label>
 
@@ -159,8 +160,8 @@
     end column
     <input
       type='number'
-      value={{this.overlay.range.end.column}}
-      oninput={{action (mut this.overlay.range.end.column) value='target.value'}}
+      value={{this.overlayEndCol}}
+      {{on 'input' (fn this.syncInputValue 'overlayEndCol')}}
     />
   </label>
 </div>
