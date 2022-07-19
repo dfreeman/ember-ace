@@ -4,18 +4,18 @@
 
 {{#ember-ace
   lines=10
-  value=value
-  highlightActiveLine=highlightActiveLine
-  showPrintMargin=showPrintMargin
-  readOnly=readOnly
-  tabSize=tabSize
-  useSoftTabs=useSoftTabs
-  useWrapMode=useWrapMode
-  showInvisibles=showInvisibles
-  showGutter=showGutter
-  theme=theme
-  overlays=overlays
-  update=(action (mut value))
+  value=this.value
+  highlightActiveLine=this.highlightActiveLine
+  showPrintMargin=this.showPrintMargin
+  readOnly=this.readOnly
+  tabSize=this.tabSize
+  useSoftTabs=this.useSoftTabs
+  useWrapMode=this.useWrapMode
+  showInvisibles=this.showInvisibles
+  showGutter=this.showGutter
+  theme=this.theme
+  overlays=this.overlays
+  update=(action (mut this.value))
   suggestCompletions=(action 'suggestCompletions')
   as |editor|
 }}
@@ -25,13 +25,13 @@
   {{/editor.completion-tooltip}}
 {{/ember-ace}}
 
-<pre>{{value}}</pre>
+<pre>{{this.value}}</pre>
 
 <label>
   <input
     type='checkbox'
-    checked={{highlightActiveLine}}
-    onchange={{action (mut highlightActiveLine) value='target.checked'}}
+    checked={{this.highlightActiveLine}}
+    onchange={{action (mut this.highlightActiveLine) value='target.checked'}}
   />
   highlightActiveLine
 </label>
@@ -39,8 +39,8 @@
 <label>
   <input
     type='checkbox'
-    checked={{showPrintMargin}}
-    onchange={{action (mut showPrintMargin) value='target.checked'}}
+    checked={{this.showPrintMargin}}
+    onchange={{action (mut this.showPrintMargin) value='target.checked'}}
   />
   showPrintMargin
 </label>
@@ -48,8 +48,8 @@
 <label>
   <input
     type='checkbox'
-    checked={{readOnly}}
-    onchange={{action (mut readOnly) value='target.checked'}}
+    checked={{this.readOnly}}
+    onchange={{action (mut this.readOnly) value='target.checked'}}
   />
   readOnly
 </label>
@@ -57,8 +57,8 @@
 <label>
   <input
     type='checkbox'
-    checked={{useSoftTabs}}
-    onchange={{action (mut useSoftTabs) value='target.checked'}}
+    checked={{this.useSoftTabs}}
+    onchange={{action (mut this.useSoftTabs) value='target.checked'}}
   />
   useSoftTabs
 </label>
@@ -66,8 +66,8 @@
 <label>
   <input
     type='checkbox'
-    checked={{useWrapMode}}
-    onchange={{action (mut useWrapMode) value='target.checked'}}
+    checked={{this.useWrapMode}}
+    onchange={{action (mut this.useWrapMode) value='target.checked'}}
   />
   useWrapMode
 </label>
@@ -75,8 +75,8 @@
 <label>
   <input
     type='checkbox'
-    checked={{showInvisibles}}
-    onchange={{action (mut showInvisibles) value='target.checked'}}
+    checked={{this.showInvisibles}}
+    onchange={{action (mut this.showInvisibles) value='target.checked'}}
   />
   showInvisibles
 </label>
@@ -84,15 +84,15 @@
 <label>
   <input
     type='checkbox'
-    checked={{showGutter}}
-    onchange={{action (mut showGutter) value='target.checked'}}
+    checked={{this.showGutter}}
+    onchange={{action (mut this.showGutter) value='target.checked'}}
   />
   showGutter
 </label>
 
 <label>
-  <select onchange={{action (mut theme) value='target.value'}}>
-    {{#each themes as |theme|}}
+  <select onchange={{action (mut this.theme) value='target.value'}}>
+    {{#each this.themes as |theme|}}
       <option value={{theme}}>{{theme}}</option>
     {{/each}}
   </select>
@@ -102,8 +102,8 @@
 <label>
   <input
     type='number'
-    value={{tabSize}}
-    onchange={{action (mut tabSize) value='target.value'}}
+    value={{this.tabSize}}
+    onchange={{action (mut this.tabSize) value='target.value'}}
   />
   tabSize
 </label>
@@ -114,14 +114,14 @@
     text
     <input
       type='text'
-      value={{overlay.text}}
-      oninput={{action (mut overlay.text) value='target.value'}}
+      value={{this.overlay.text}}
+      oninput={{action (mut this.overlay.text) value='target.value'}}
     />
   </label>
 
   <label>
     type
-    <select onchange={{action (mut overlay.type) value='target.value'}}>
+    <select onchange={{action (mut this.overlay.type) value='target.value'}}>
       <option value='error'>error</option>
       <option value='warning' selected>warning</option>
       <option value='info'>info</option>
@@ -132,8 +132,8 @@
     start row
     <input
       type='number'
-      value={{overlay.range.start.row}}
-      oninput={{action (mut overlay.range.start.row) value='target.value'}}
+      value={{this.overlay.range.start.row}}
+      oninput={{action (mut this.overlay.range.start.row) value='target.value'}}
     />
   </label>
 
@@ -141,8 +141,8 @@
     start column
     <input
       type='number'
-      value={{overlay.range.start.column}}
-      oninput={{action (mut overlay.range.start.column) value='target.value'}}
+      value={{this.overlay.range.start.column}}
+      oninput={{action (mut this.overlay.range.start.column) value='target.value'}}
     />
   </label>
 
@@ -150,8 +150,8 @@
     end row
     <input
       type='number'
-      value={{overlay.range.end.row}}
-      oninput={{action (mut overlay.range.end.row) value='target.value'}}
+      value={{this.overlay.range.end.row}}
+      oninput={{action (mut this.overlay.range.end.row) value='target.value'}}
     />
   </label>
 
@@ -159,8 +159,8 @@
     end column
     <input
       type='number'
-      value={{overlay.range.end.column}}
-      oninput={{action (mut overlay.range.end.column) value='target.value'}}
+      value={{this.overlay.range.end.column}}
+      oninput={{action (mut this.overlay.range.end.column) value='target.value'}}
     />
   </label>
 </div>
