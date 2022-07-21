@@ -2,7 +2,7 @@
 
 <h2 id='title'>Welcome to Ember</h2>
 
-<EmberAce
+<AceEditor
   @value={{this.value}}
   @update={{fn (mut this.value)}}
   @ready={{this.editorReady}}
@@ -103,61 +103,3 @@
   />
   tabSize
 </label>
-
-<h3>Overlay</h3>
-{{! template-lint-disable no-inline-styles }}
-<div style='display: flex; flex-flow: column'>
-  <label>
-    text
-    <input
-      type='text'
-      value={{this.overlayText}}
-      {{on 'input' (fn this.syncInputValue 'overlayText')}}
-    />
-  </label>
-
-  <label>
-    type
-    <select {{on 'change' (fn this.syncInputValue 'overlayType')}}>
-      <option value='error'>error</option>
-      <option value='warning' selected>warning</option>
-      <option value='info'>info</option>
-    </select>
-  </label>
-
-  <label>
-    start row
-    <input
-      type='number'
-      value={{this.overlayStartRow}}
-      {{on 'input' (fn this.syncInputValue 'overlayStartRow')}}
-    />
-  </label>
-
-  <label>
-    start column
-    <input
-      type='number'
-      value={{this.overlayStartCol}}
-      {{on 'input' (fn this.syncInputValue 'overlayStartCol')}}
-    />
-  </label>
-
-  <label>
-    end row
-    <input
-      type='number'
-      value={{this.overlayEndRow}}
-      {{on 'input' (fn this.syncInputValue 'overlayEndRow')}}
-    />
-  </label>
-
-  <label>
-    end column
-    <input
-      type='number'
-      value={{this.overlayEndCol}}
-      {{on 'input' (fn this.syncInputValue 'overlayEndCol')}}
-    />
-  </label>
-</div>
