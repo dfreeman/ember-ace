@@ -5,7 +5,7 @@ export default {
   /**
    * The text value of this entire line.
    */
-  text: text(null, { normalize: false }),
+  text: text(undefined, { normalize: false }),
 
   /**
    * A collection of tokens from which this line is composed.

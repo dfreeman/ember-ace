@@ -1,6 +1,8 @@
-import pollCondition from 'ember-ace/test-support/helpers/poll-condition';
+import { waitUntil } from '@ember/test-helpers';
 import editorInteraction from 'ember-ace/test-support/helpers/editor-interaction';
-import { text, collection, isVisible } from 'ember-cli-page-object';
+import { text, collection, isVisible, Collection } from 'ember-cli-page-object';
+import { Component } from 'ember-cli-page-object/-private';
+import { getter } from 'ember-cli-page-object/macros';
 
 /**
  * A suggestion in the autocomplete list, with a caption on the left
@@ -20,15 +22,21 @@ export const tooltip = {
   scope: '.ace_doc-tooltip',
 };
 
+export type Autocomplete = Component<{
+  isVisible: boolean;
+  focusedIndex: number;
+  suggestions: Collection<typeof suggestion>;
+}>;
+
 export default {
   isVisible: isVisible('.ace_autocomplete', { testContainer: 'body' }),
 
   /**
    * Trigger a request for autocomplete suggestions.
    */
-  trigger: editorInteraction(function (editor) {
-    editor.execCommand('startAutocomplete');
-    return pollCondition('autocomplete visible', () => this.isVisible);
+  trigger: editorInteraction(function (this: Autocomplete, editor) {
+    editor.execCommand('startAutocomplete', undefined);
+    return waitUntil(() => this.isVisible);
   }),
 
   /**
@@ -39,25 +47,19 @@ export default {
   /**
    * Focus the next suggestion in the list.
    */
-  focusNext: editorInteraction(function (editor) {
+  focusNext: editorInteraction(function (this: Autocomplete, editor) {
     const index = this.focusedIndex;
     editor.completer.goTo('down');
-    return pollCondition(
-      'next suggestion focused',
-      () => this.focusedIndex === index + 1
-    );
+    return waitUntil(() => this.focusedIndex === index + 1);
   }),
 
   /**
    * Focus the previous suggestion in the list.
    */
-  focusPrevious: editorInteraction(function (editor) {
+  focusPrevious: editorInteraction(function (this: Autocomplete, editor) {
     const index = this.focusedIndex;
     editor.completer.goTo('up');
-    return pollCondition(
-      'previous suggestion focused',
-      () => this.focusedIndex === index - 1
-    );
+    return waitUntil(() => this.focusedIndex === index - 1);
   }),
 
   /**
@@ -68,22 +70,16 @@ export default {
   /**
    * The index of the currently-highlighted selection
    */
-  focusedIndex: {
-    isDescriptor: true,
-    get: editorInteraction((editor) => {
-      return editor.completer.popup.getRow();
-    }),
-  },
+  focusedIndex: editorInteraction((editor) => {
+    return editor.completer.popup.getRow();
+  }),
 
   /**
    * The currently-highlighted suggestion.
    */
-  focusedSuggestion: {
-    isDescriptor: true,
-    get() {
-      return this.suggestions.objectAt(this.focusedIndex);
-    },
-  },
+  focusedSuggestion: getter(function (this: Autocomplete) {
+    return this.suggestions.objectAt(this.focusedIndex);
+  }),
 
   /**
    * The list of active suggestions.

@@ -1,8 +1,8 @@
 import RSVP from 'rsvp';
 
-export default async function pollCondition(
-  message,
-  callback,
+export default async function pollCondition<T>(
+  message: string,
+  callback: () => T | PromiseLike<T>,
   { maxTries = 50, interval = 5 } = {}
 ) {
   for (let tries = 0; tries < maxTries; tries++) {
