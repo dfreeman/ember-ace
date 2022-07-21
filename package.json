@@ -22,7 +22,7 @@
     "postpack": "ember ts:clean"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": "14.* || >= 16"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -99,7 +99,7 @@
     "singleQuote": true
   },
   "volta": {
-    "node": "12.22.11"
+    "node": "14.20.0"
   },
   "resolutions": {
     "ember-cli-babel": "^7.26.0"
