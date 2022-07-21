@@ -3,27 +3,23 @@
 <h2 id='title'>Welcome to Ember</h2>
 
 <EmberAce
-  @lines={{10}}
   @value={{this.value}}
-  @highlightActiveLine={{this.highlightActiveLine}}
-  @showPrintMargin={{this.showPrintMargin}}
-  @readOnly={{this.readOnly}}
-  @tabSize={{this.tabSize}}
-  @useSoftTabs={{this.useSoftTabs}}
-  @useWrapMode={{this.useWrapMode}}
-  @showInvisibles={{this.showInvisibles}}
-  @showGutter={{this.showGutter}}
-  @theme={{this.theme}}
-  @overlays={{this.overlays}}
   @update={{fn (mut this.value)}}
-  @suggestCompletions={{this.suggestCompletions}}
-  as |editor|
->
-  <editor.completion-tooltip as |suggestion|>
-    Caption:
-    {{suggestion.caption}}
-  </editor.completion-tooltip>
-</EmberAce>
+  @ready={{this.editorReady}}
+  @editorOptions={{hash
+    minLines=10
+    maxLines=10
+    highlightActiveLine=this.highlightActiveLine
+    showPrintMargin=this.showPrintMargin
+    readOnly=this.readOnly
+    tabSize=this.tabSize
+    useSoftTabs=this.useSoftTabs
+    wrap=this.wrap
+    showInvisibles=this.showInvisibles
+    showGutter=this.showGutter
+    theme=this.theme
+  }}
+/>
 
 <pre>{{this.value}}</pre>
 
@@ -35,7 +31,7 @@
   />
   highlightActiveLine
 </label>
-
+<br />
 <label>
   <input
     type='checkbox'
@@ -44,7 +40,7 @@
   />
   showPrintMargin
 </label>
-
+<br />
 <label>
   <input
     type='checkbox'
@@ -53,7 +49,7 @@
   />
   readOnly
 </label>
-
+<br />
 <label>
   <input
     type='checkbox'
@@ -62,16 +58,16 @@
   />
   useSoftTabs
 </label>
-
+<br />
 <label>
   <input
     type='checkbox'
-    checked={{this.useWrapMode}}
-    {{on 'change' (fn this.syncInputValue 'useWrapMode')}}
+    checked={{this.wrap}}
+    {{on 'change' (fn this.syncInputValue 'wrap')}}
   />
-  useWrapMode
+  wrap
 </label>
-
+<br />
 <label>
   <input
     type='checkbox'
@@ -80,7 +76,7 @@
   />
   showInvisibles
 </label>
-
+<br />
 <label>
   <input
     type='checkbox'
@@ -89,7 +85,7 @@
   />
   showGutter
 </label>
-
+<br />
 <label>
   <select {{on 'change' (fn this.syncInputValue 'theme')}}>
     {{#each this.themes as |theme|}}
@@ -98,7 +94,7 @@
   </select>
   theme
 </label>
-
+<br />
 <label>
   <input
     type='number'
