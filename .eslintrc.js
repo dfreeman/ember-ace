@@ -21,6 +21,16 @@ module.exports = {
   },
   rules: {},
   overrides: [
+    // TS
+    {
+      files: '*.ts',
+      parser: '@typescript-eslint/parser',
+      plugins: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:prettier/recommended',
+        'plugin:ember/recommended',
+      ],
+    },
     // node files
     {
       files: [
