@@ -10,7 +10,7 @@ module.exports = {
       legacyDecorators: true,
     },
   },
-  plugins: ['ember'],
+  plugins: ['ember', 'prettier'],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
@@ -25,11 +25,19 @@ module.exports = {
     {
       files: '*.ts',
       parser: '@typescript-eslint/parser',
-      plugins: [
+      plugins: ['ember', 'prettier', '@typescript-eslint'],
+      extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
         'plugin:ember/recommended',
       ],
+      rules: {
+        'prefer-const': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+      },
     },
     // node files
     {

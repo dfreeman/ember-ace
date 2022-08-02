@@ -13,7 +13,7 @@ import { tracked } from '@glimmer/tracking';
 const sinon = require('sinon').default as typeof import('sinon');
 
 class State {
-  @tracked value: string = '';
+  @tracked value = '';
   @tracked options: Partial<Ace.EditorOptions> = {
     minLines: 1,
     maxLines: 10,
