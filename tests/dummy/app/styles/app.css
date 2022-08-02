@@ -1,3 +1,13 @@
 .main-editor {
   height: 500px;
 }
+
+.ember-ace-error {
+  background-color: rgba(255, 0, 0, 0.5);
+  position: absolute;
+}
+
+.ember-ace-warning {
+  background-color: rgba(200, 200, 0, 0.5);
+  position: absolute;
+}

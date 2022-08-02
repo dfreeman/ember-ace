@@ -1,168 +1,105 @@
-<style>
-  .ember-ace-error { background-color: rgba(255, 0, 0, 0.5); position: absolute; }
-  .ember-ace-warning { background-color: rgba(200, 200, 0, 0.5); position: absolute; }
-</style>
+{{page-title 'Dummy'}}
 
-{{#ember-ace
-  lines=10
-  value=value
-  highlightActiveLine=highlightActiveLine
-  showPrintMargin=showPrintMargin
-  readOnly=readOnly
-  tabSize=tabSize
-  useSoftTabs=useSoftTabs
-  useWrapMode=useWrapMode
-  showInvisibles=showInvisibles
-  showGutter=showGutter
-  theme=theme
-  overlays=overlays
-  update=(action (mut value))
-  suggestCompletions=(action 'suggestCompletions')
-  as |editor|
-}}
-  {{#editor.completion-tooltip as |suggestion|}}
-    Caption: {{suggestion.caption}}
-  {{/editor.completion-tooltip}}
-{{/ember-ace}}
+<h2 id='title'>Welcome to Ember</h2>
 
-<pre>{{value}}</pre>
+<AceEditor
+  @value={{this.value}}
+  @update={{fn (mut this.value)}}
+  @ready={{this.editorReady}}
+  @options={{hash
+    minLines=10
+    maxLines=10
+    highlightActiveLine=this.highlightActiveLine
+    showPrintMargin=this.showPrintMargin
+    readOnly=this.readOnly
+    tabSize=this.tabSize
+    useSoftTabs=this.useSoftTabs
+    wrap=this.wrap
+    showInvisibles=this.showInvisibles
+    showGutter=this.showGutter
+    theme=this.theme
+  }}
+/>
+
+<pre>{{this.value}}</pre>
 
 <label>
   <input
-    type="checkbox"
-    checked={{highlightActiveLine}}
-    onchange={{action (mut highlightActiveLine) value='target.checked'}}
-  >
+    type='checkbox'
+    checked={{this.highlightActiveLine}}
+    {{on 'change' (fn this.syncInputValue 'highlightActiveLine')}}
+  />
   highlightActiveLine
 </label>
-
+<br />
 <label>
   <input
-    type="checkbox"
-    checked={{showPrintMargin}}
-    onchange={{action (mut showPrintMargin) value='target.checked'}}
-  >
+    type='checkbox'
+    checked={{this.showPrintMargin}}
+    {{on 'change' (fn this.syncInputValue 'showPrintMargin')}}
+  />
   showPrintMargin
 </label>
-
+<br />
 <label>
   <input
-    type="checkbox"
-    checked={{readOnly}}
-    onchange={{action (mut readOnly) value='target.checked'}}
-  >
+    type='checkbox'
+    checked={{this.readOnly}}
+    {{on 'change' (fn this.syncInputValue 'readOnly')}}
+  />
   readOnly
 </label>
-
+<br />
 <label>
   <input
-    type="checkbox"
-    checked={{useSoftTabs}}
-    onchange={{action (mut useSoftTabs) value='target.checked'}}
-  >
+    type='checkbox'
+    checked={{this.useSoftTabs}}
+    {{on 'change' (fn this.syncInputValue 'useSoftTabs')}}
+  />
   useSoftTabs
 </label>
-
-
+<br />
 <label>
   <input
-    type="checkbox"
-    checked={{useWrapMode}}
-    onchange={{action (mut useWrapMode) value='target.checked'}}
-  >
-  useWrapMode
+    type='checkbox'
+    checked={{this.wrap}}
+    {{on 'change' (fn this.syncInputValue 'wrap')}}
+  />
+  wrap
 </label>
-
-
+<br />
 <label>
   <input
-    type="checkbox"
-    checked={{showInvisibles}}
-    onchange={{action (mut showInvisibles) value='target.checked'}}
-  >
+    type='checkbox'
+    checked={{this.showInvisibles}}
+    {{on 'change' (fn this.syncInputValue 'showInvisibles')}}
+  />
   showInvisibles
 </label>
-
+<br />
 <label>
   <input
-    type="checkbox"
-    checked={{showGutter}}
-    onchange={{action (mut showGutter) value='target.checked'}}
-  >
+    type='checkbox'
+    checked={{this.showGutter}}
+    {{on 'change' (fn this.syncInputValue 'showGutter')}}
+  />
   showGutter
 </label>
-
+<br />
 <label>
-  <select onchange={{action (mut theme) value='target.value'}}>
-    {{#each themes as |theme|}}
+  <select {{on 'change' (fn this.syncInputValue 'theme')}}>
+    {{#each this.themes as |theme|}}
       <option value={{theme}}>{{theme}}</option>
     {{/each}}
   </select>
   theme
 </label>
-
+<br />
 <label>
   <input
-    type="number"
-    value={{tabSize}}
-    onchange={{action (mut tabSize) value='target.value'}}
-  >
+    type='number'
+    value={{this.tabSize}}
+    {{on 'change' (fn this.syncInputValue 'tabSize')}}
+  />
   tabSize
 </label>
-
-<h3>Overlay</h3>
-<div style="display: flex; flex-flow: column">
-  <label>
-    text
-    <input
-      type="text"
-      value={{overlay.text}}
-      oninput={{action (mut overlay.text) value='target.value'}}
-    >
-  </label>
-
-  <label>
-    type
-    <select onchange={{action (mut overlay.type) value='target.value'}}>
-      <option value='error'>error</option>
-      <option value='warning' selected>warning</option>
-      <option value='info'>info</option>
-    </select>
-  </label>
-
-  <label>
-    start row
-    <input
-      type="number"
-      value={{overlay.range.start.row}}
-      oninput={{action (mut overlay.range.start.row) value='target.value'}}
-    >
-  </label>
-
-  <label>
-    start column
-    <input
-      type="number"
-      value={{overlay.range.start.column}}
-      oninput={{action (mut overlay.range.start.column) value='target.value'}}
-    >
-  </label>
-
-  <label>
-    end row
-    <input
-      type="number"
-      value={{overlay.range.end.row}}
-      oninput={{action (mut overlay.range.end.row) value='target.value'}}
-    >
-  </label>
-
-  <label>
-    end column
-    <input
-      type="number"
-      value={{overlay.range.end.column}}
-      oninput={{action (mut overlay.range.end.column) value='target.value'}}
-    >
-  </label>
-</div>
