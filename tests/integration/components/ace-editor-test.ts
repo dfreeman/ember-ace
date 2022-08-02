@@ -5,8 +5,7 @@ import { create } from 'ember-cli-page-object';
 import aceComponent from 'ember-ace/test-support/components/ember-ace';
 import hbs from 'htmlbars-inline-precompile';
 import { Component } from 'ember-cli-page-object/-private';
-import ace from 'ember-ace';
-import type { Ace } from 'ace-builds';
+import { Ace, Range } from 'ace-builds';
 import { tracked } from '@glimmer/tracking';
 
 // `ember-sinon` and `@types/sinon` disagree on this
@@ -128,13 +127,13 @@ module('Integration | Component | <AceEditor />', function (hooks) {
 
     editor.session.setAnnotations([{ type: 'error', text: 'Uh oh', row: 0 }]);
     editor.session.addMarker(
-      new ace.Range(0, 1, 1, 1),
+      new Range(0, 1, 1, 1),
       'neat-front-thing',
       'text',
       true
     );
     editor.session.addMarker(
-      new ace.Range(1, 2, 2, 4),
+      new Range(1, 2, 2, 4),
       'cool-back-thing',
       'text',
       false
