@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class ApplicationController extends Controller {
-  @tracked value = 'one two three\nfour five size\nseven eight nine';
+  @tracked value = 'console.log("hello");\n\n// Intentional syntax error\n2 +';
 
   @tracked highlightActiveLine = true;
   @tracked showPrintMargin = true;
@@ -13,7 +13,7 @@ export default class ApplicationController extends Controller {
   @tracked tabSize = 2;
   @tracked useSoftTabs = true;
   @tracked wrap = true;
-  @tracked showInvisibles = true;
+  @tracked showInvisibles = false;
   @tracked showGutter = true;
 
   @tracked theme = 'ace/theme/textmate';
@@ -26,10 +26,14 @@ export default class ApplicationController extends Controller {
   @action syncInputValue<K extends keyof this>(key: K, { target }: InputEvent) {
     assert(
       'Should be an input of some kind',
-      target instanceof HTMLInputElement
+      target instanceof HTMLInputElement || target instanceof HTMLSelectElement
     );
-    this[key] = (target.type === 'checkbox'
-      ? target.checked
-      : target.value) as unknown as this[K];
+
+    let value =
+      target instanceof HTMLInputElement && target.type === 'checkbox'
+        ? target.checked
+        : target.value;
+
+    this[key] = value as unknown as this[K];
   }
 }
