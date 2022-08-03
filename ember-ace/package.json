@@ -1,0 +1,76 @@
+{
+  "name": "ember-ace",
+  "version": "2.0.2",
+  "description": "An Ember addon for the Ace code editor",
+  "engines": {
+    "node": "14.* || >= 16"
+  },
+  "keywords": [
+    "ember-addon"
+  ],
+  "repository": "dfreeman/ember-ace",
+  "license": "MIT",
+  "author": "Dan Freeman",
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js:fix": "eslint . --fix",
+    "start": "rollup --config --watch",
+    "test": "true",
+    "prepack": "rollup --config"
+  },
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.8.3",
+    "ember-modifier": "^3.2.7"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.18.6",
+    "@embroider/addon-dev": "^1.8.3",
+    "@types/ember": "^4.0.0",
+    "@types/ember__destroyable": "^4.0.0",
+    "rollup": "^2.77.2",
+    "rollup-plugin-ts": "^3.0.2"
+  },
+  "peerDependencies": {
+    "@ember/test-helpers": "^2.0.0",
+    "ace-builds": "^1.8.0",
+    "ember-cli-page-object": "^1.17.9 || ^2.0.0-beta.0"
+  },
+  "peerDependenciesMeta": {
+    "@ember/test-helpers": {
+      "optional": true
+    },
+    "ember-cli-page-object": {
+      "optional": true
+    }
+  },
+  "volta": {
+    "extends": "../package.json"
+  },
+  "ember-addon": {
+    "main": "addon-main.js",
+    "type": "addon",
+    "version": 2,
+    "app-js": {
+      "./components/ace-editor.js": "./dist/_app_/components/ace-editor.js",
+      "./modifiers/-ace-editor.js": "./dist/_app_/modifiers/-ace-editor.js"
+    }
+  }
+}

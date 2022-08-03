@@ -1,0 +1,106 @@
+{{page-title 'Test App'}}
+
+<h2 id='title'>Welcome to Ember</h2>
+
+<AceEditor
+  @value={{this.value}}
+  @update={{fn (mut this.value)}}
+  @ready={{this.editorReady}}
+  @options={{hash
+    mode='ace/mode/javascript'
+    minLines=10
+    maxLines=10
+    highlightActiveLine=this.highlightActiveLine
+    showPrintMargin=this.showPrintMargin
+    readOnly=this.readOnly
+    tabSize=this.tabSize
+    useSoftTabs=this.useSoftTabs
+    wrap=this.wrap
+    showInvisibles=this.showInvisibles
+    showGutter=this.showGutter
+    theme=this.theme
+  }}
+/>
+
+<pre>{{this.value}}</pre>
+
+<label>
+  <input
+    type='checkbox'
+    checked={{this.highlightActiveLine}}
+    {{on 'change' (fn this.syncInputValue 'highlightActiveLine')}}
+  />
+  highlightActiveLine
+</label>
+<br />
+<label>
+  <input
+    type='checkbox'
+    checked={{this.showPrintMargin}}
+    {{on 'change' (fn this.syncInputValue 'showPrintMargin')}}
+  />
+  showPrintMargin
+</label>
+<br />
+<label>
+  <input
+    type='checkbox'
+    checked={{this.readOnly}}
+    {{on 'change' (fn this.syncInputValue 'readOnly')}}
+  />
+  readOnly
+</label>
+<br />
+<label>
+  <input
+    type='checkbox'
+    checked={{this.useSoftTabs}}
+    {{on 'change' (fn this.syncInputValue 'useSoftTabs')}}
+  />
+  useSoftTabs
+</label>
+<br />
+<label>
+  <input
+    type='checkbox'
+    checked={{this.wrap}}
+    {{on 'change' (fn this.syncInputValue 'wrap')}}
+  />
+  wrap
+</label>
+<br />
+<label>
+  <input
+    type='checkbox'
+    checked={{this.showInvisibles}}
+    {{on 'change' (fn this.syncInputValue 'showInvisibles')}}
+  />
+  showInvisibles
+</label>
+<br />
+<label>
+  <input
+    type='checkbox'
+    checked={{this.showGutter}}
+    {{on 'change' (fn this.syncInputValue 'showGutter')}}
+  />
+  showGutter
+</label>
+<br />
+<label>
+  <select {{on 'change' (fn this.syncInputValue 'theme')}}>
+    {{#each this.themes as |theme|}}
+      <option value={{theme}}>{{theme}}</option>
+    {{/each}}
+  </select>
+  theme
+</label>
+<br />
+<label>
+  <input
+    type='number'
+    value={{this.tabSize}}
+    {{on 'change' (fn this.syncInputValue 'tabSize')}}
+  />
+  tabSize
+</label>
