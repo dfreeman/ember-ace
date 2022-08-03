@@ -1,5 +1,6 @@
 import { Addon } from '@embroider/addon-dev/rollup';
 import typescript from 'rollup-plugin-ts';
+import copy from 'rollup-plugin-copy';
 
 const addon = new Addon({
   srcDir: 'src',
@@ -43,6 +44,14 @@ export default {
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
     addon.keepAssets(['**/*.css']),
+
+    // Copy Readme and License into published package
+    copy({
+      targets: [
+        { src: '../README.md', dest: '.' },
+        { src: '../LICENSE.md', dest: '.' },
+      ],
+    }),
 
     // Remove leftover build artifacts when starting a new build.
     addon.clean(),
