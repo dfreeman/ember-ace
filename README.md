@@ -95,12 +95,19 @@ import * as jsWorkerUrl from 'ace-builds/src-noconflict/worker-javascript?resour
 config.setModuleUrl('ace/mode/javascript_worker', jsWorkerUrl);
 ```
 
+Note: under Embroider, asset modules produce a default export instead, so you'd write `import jsWorkerUrl from '...'`.
+
 For TypeScript use, you can put the following in a `.d.ts` file in your project to ensure the worker URL imports are treated correctly:
 
 ```ts
 declare module '*?resource' {
   const url: string;
+
+  // In a classic app with auto-import:
   export = url;
+
+  // In an Embroider app:
+  export default url;
 }
 ```
 

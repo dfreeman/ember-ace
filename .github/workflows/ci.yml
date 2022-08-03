@@ -29,6 +29,7 @@ jobs:
         run: yarn lint
       - name: Run Tests
         run: yarn test:ember
+        working-directory: test-app
 
   floating:
     name: 'Floating Dependencies'
@@ -44,6 +45,7 @@ jobs:
         run: yarn install --no-lockfile
       - name: Run Tests
         run: yarn test:ember
+        working-directory: test-app
 
   try-scenarios:
     name: ${{ matrix.try-scenario }}
@@ -73,4 +75,5 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Run Tests
-        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
+        run: yarn run ember try:one ${{ matrix.try-scenario }}
+        working-directory: test-app
