@@ -1,4 +1,7 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
-  "include": ["src"]
+  "include": ["src", "types"],
+  "glint": {
+    "environment": "ember-loose"
+  }
 }

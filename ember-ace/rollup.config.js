@@ -17,6 +17,7 @@ export default {
       'components/**/*.ts',
       'modifiers/**/*.ts',
       'test-support/**/*.ts',
+      'glint.ts',
     ]),
 
     // These are the modules that should get reexported into the traditional
