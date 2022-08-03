@@ -66,7 +66,13 @@ module.exports = async function () {
         },
       },
       embroiderSafe(),
-      embroiderOptimized(),
+      embroiderOptimized({
+        npm: {
+          devDependencies: {
+            'ember-cli-page-object': 'beta',
+          },
+        },
+      }),
     ],
   };
 };
