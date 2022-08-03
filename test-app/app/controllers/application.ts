@@ -26,7 +26,7 @@ export default class ApplicationController extends Controller {
 
   @action public syncInputValue<K extends keyof this>(
     key: K,
-    { target }: InputEvent
+    { target }: Event
   ): void {
     assert(
       'Should be an input of some kind',

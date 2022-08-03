@@ -16,8 +16,7 @@
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each",
-    "prepack": "ember ts:precompile",
-    "postpack": "ember ts:clean"
+    "typecheck": "glint"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -25,6 +24,8 @@
     "@embroider/test-setup": "^1.8.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@glint/core": "^0.9.1",
+    "@glint/environment-ember-loose": "^0.9.1",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember": "^4.0.0",
     "@types/ember-qunit": "^5.0.0",
@@ -32,8 +33,8 @@
     "@types/jquery": "^3.5.14",
     "@types/sinon": "^10.0.13",
     "ace-builds": "^1.8.1",
-    "ember-auto-import": "^2.4.0",
     "ember-ace": "*",
+    "ember-auto-import": "^2.4.0",
     "ember-cli": "~4.2.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-dependency-checker": "^3.2.0",
