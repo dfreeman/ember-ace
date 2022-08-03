@@ -1,9 +1,7 @@
-import ace from 'ember-ace';
+import { type Ace, edit } from 'ace-builds';
 import { schedule } from '@ember/runloop';
 import Modifier, { ArgsFor } from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
-
-import type { Ace } from 'ace-builds';
 
 export interface AceEditorArgs {
   value?: string;
@@ -49,7 +47,7 @@ export default class AceEditor extends Modifier<AceEditorSignature> {
     element: HTMLPreElement,
     args: AceEditorArgs
   ): void {
-    let editor = ace.edit(element, { value: args.value });
+    let editor = edit(element, { value: args.value });
 
     this.updateEditor(editor, args);
     this.rerender(editor);

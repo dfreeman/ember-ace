@@ -4,11 +4,17 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
-    ace: {
-      themes: ['ambiance', 'chaos'],
-      modes: ['javascript'],
-      workers: ['javascript'],
-      exts: ['language_tools'],
+    autoImport: {
+      webpack: {
+        module: {
+          rules: [
+            {
+              resourceQuery: /resource/,
+              type: 'asset/resource',
+            },
+          ],
+        },
+      },
     },
   });
 

@@ -28,6 +28,8 @@
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
     "@embroider/test-setup": "^1.2.0",
+    "@glimmer/component": "^1.1.2",
+    "@glimmer/tracking": "^1.1.2",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember": "^4.0.0",
     "@types/ember-qunit": "^5.0.0",
@@ -38,11 +40,10 @@
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "babel-eslint": "^10.1.0",
-    "ember-auto-import": "^2.4.0",
     "ember-cli": "~4.2.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-page-object": "1.17.9",
+    "ember-cli-page-object": "^1.17.9",
     "ember-cli-release": "^1.0.0-beta.2",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
@@ -78,16 +79,20 @@
   "license": "MIT",
   "author": "Dan Freeman",
   "dependencies": {
-    "@glimmer/component": "^1.1.2",
-    "@glimmer/tracking": "^1.1.2",
     "ace-builds": "^1.8.0",
-    "broccoli-merge-trees": "^2.0.0",
-    "broccoli-plugin": "^1.2.1",
+    "ember-auto-import": "^2.4.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.0.1",
-    "ember-cli-node-assets": "^0.2.2",
     "ember-cli-typescript": "^5.1.0",
     "ember-modifier": "^3.2.7"
+  },
+  "peerDependencies": {
+    "ember-cli-page-object": "^1.17.9 || ^2.0.0-beta.0"
+  },
+  "peerDependenciesMeta": {
+    "ember-cli-page-object": {
+      "optional": true
+    }
   },
   "ember": {
     "edition": "octane"
