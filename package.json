@@ -8,7 +8,8 @@
     "start:test": "yarn workspace test-app run start",
     "lint": "yarn workspaces run lint",
     "lint:fix": "yarn workspaces run lint:fix",
-    "test": "yarn workspaces run test"
+    "test": "yarn workspaces run test",
+    "typecheck": "yarn workspaces run typecheck"
   },
   "devDependencies": {
     "@dfreeman/eslint-config": "^4.0.0",
