@@ -27,6 +27,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Lint
         run: yarn lint
+      - name: Typecheck
+        run: yarn typecheck
       - name: Run Tests
         run: yarn test:ember
         working-directory: test-app

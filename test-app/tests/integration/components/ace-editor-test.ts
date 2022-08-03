@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, TestContext, waitUntil } from '@ember/test-helpers';
 import { create } from 'ember-cli-page-object';
 import aceComponent from 'ember-ace/test-support/components/ember-ace';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { Component } from 'ember-cli-page-object/-private';
 import { Ace, Range } from 'ace-builds';
 import { tracked } from '@glimmer/tracking';
@@ -35,7 +35,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
 
   test('rendering a given value', async function (this: AceTestContext, assert) {
     this.state.value = 'function() {\n  console.log("hi");\n}';
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @value={{this.state.value}} />
     `);
 
@@ -51,7 +51,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
 
   test('leading, trailing and internal whitespace', async function (this: AceTestContext, assert) {
     this.state.value = '\n\na\n  \nb\n\n';
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @value={{this.state.value}} />
     `);
 
@@ -60,7 +60,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
   });
 
   test('internal value updates', async function (this: AceTestContext, assert) {
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @update={{this.change}} />
     `);
 
@@ -72,7 +72,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
   });
 
   test('internal value updates with initial value', async function (this: AceTestContext, assert) {
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @update={{this.change}} />
     `);
 
@@ -88,7 +88,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
   test('external value updates', async function (this: AceTestContext, assert) {
     this.state.value = 'one';
 
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @value={{this.state.value}} @update={{this.change}} />
     `);
 
@@ -102,7 +102,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
   test('setting editor options', async function (this: AceTestContext, assert) {
     this.state.options = { ...this.state.options, theme: 'ace/theme/ambiance' };
 
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @value={{this.state.value}} @update={{this.change}} />
     `);
 
@@ -119,7 +119,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
     this.ready = (e) => (editor = e);
     this.state.value = 'one\ntwo\nthree\n';
 
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @ready={{this.ready}} @value={{this.state.value}} />
     `);
 
@@ -159,7 +159,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
     this.ready = (e) => (editor = e);
     this.state.value = 'foo\nbar\nf';
 
-    await render(hbs`
+    await render<AceTestContext>(hbs`
       <AceEditor @options={{this.state.options}} @ready={{this.ready}} @value={{this.state.value}} />
     `);
 
