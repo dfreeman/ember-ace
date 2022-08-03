@@ -31,7 +31,7 @@ pnpm install ember-ace ace-builds
 
 ### Component Args
 
-See the application controller in this addon's dummy application for usage examples of several editor options.
+See the application controller in this addon's test application for usage examples of several editor options.
 
 - `@value: string`: the string value of the editor
 - `@update: (newValue: string) => void`: a callback invoked when the value of the editor changes

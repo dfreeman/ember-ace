@@ -50,7 +50,6 @@ module.exports = {
         './testem.js',
         './blueprints/*/index.js',
         './config/**/*.js',
-        './tests/dummy/config/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -61,6 +60,9 @@ module.exports = {
       },
       plugins: ['node'],
       extends: ['plugin:node/recommended'],
+      rules: {
+        'node/no-unpublished-require': 'off',
+      },
     },
     {
       // test files
