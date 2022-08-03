@@ -1,5 +1,5 @@
 import { waitUntil } from '@ember/test-helpers';
-import editorInteraction from 'ember-ace/test-support/helpers/editor-interaction';
+import editorInteraction from '../../helpers/editor-interaction';
 import { text, collection, isVisible, Collection } from 'ember-cli-page-object';
 import { Component } from 'ember-cli-page-object/-private';
 import { getter } from 'ember-cli-page-object/macros';

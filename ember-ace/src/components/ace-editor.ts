@@ -1,5 +1,5 @@
 import templateOnlyComponent from '@ember/component/template-only';
-import { AceEditorArgs } from 'ember-ace/modifiers/-ace-editor';
+import { type AceEditorArgs } from '../modifiers/-ace-editor';
 
 export interface AceEditorSignature {
   Args: AceEditorArgs;

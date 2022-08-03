@@ -1,16 +1,14 @@
 {
   "private": true,
   "scripts": {
+    "prepare": "yarn workspace ember-ace build",
     "build": "yarn workspace ember-ace build",
-
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "yarn workspace ember-ace start",
     "start:test:classic": "yarn workspace test-app-classic run start",
-    "start:test:embroider": "yarn workspace test-app-embroider run start",
-
+    "//start:test:embroider": "yarn workspace test-app-embroider run start",
     "lint": "yarn workspaces run lint",
     "lint:fix": "yarn workspaces run lint:fix",
-
     "test": "yarn workspaces run test"
   },
   "devDependencies": {
@@ -29,6 +27,6 @@
     "node": "14.20.0"
   },
   "resolutions": {
-    "ember-cli-babel": "^7.26.0"
+    "**/ember-cli-babel": "^7.26.0"
   }
 }

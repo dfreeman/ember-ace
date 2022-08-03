@@ -1,3 +1,8 @@
+/src
+/tsconfig.json
+/rollup.config.js
+/babel.config.json
+
 # misc
 /.eslintcache
 /.eslintignore

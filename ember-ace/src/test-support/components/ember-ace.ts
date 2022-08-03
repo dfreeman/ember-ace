@@ -1,5 +1,5 @@
 import { collection } from 'ember-cli-page-object';
-import editorInteraction from 'ember-ace/test-support/helpers/editor-interaction';
+import editorInteraction from '../helpers/editor-interaction';
 import line from './ember-ace/line';
 import marker from './ember-ace/marker';
 import annotation from './ember-ace/annotation';

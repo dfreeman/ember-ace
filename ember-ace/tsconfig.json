@@ -1,7 +1,4 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
-  "compilerOptions": {
-    "noEmitOnError": false
-  },
-  "include": []
+  "include": ["src"]
 }
