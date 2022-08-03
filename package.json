@@ -1,5 +1,26 @@
 {
   "private": true,
+  "scripts": {
+    "build": "yarn workspace ember-ace build",
+
+    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start:addon": "yarn workspace ember-ace start",
+    "start:test:classic": "yarn workspace test-app-classic run start",
+    "start:test:embroider": "yarn workspace test-app-embroider run start",
+
+    "lint": "yarn workspaces run lint",
+    "lint:fix": "yarn workspaces run lint:fix",
+
+    "test": "yarn workspaces run test"
+  },
+  "devDependencies": {
+    "@dfreeman/eslint-config": "^4.0.0",
+    "concurrently": "^7.2.1",
+    "ember-template-lint": "^4.10.1",
+    "eslint": "^8.21.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.7.4"
+  },
   "workspaces": [
     "ember-ace",
     "test-app-classic"

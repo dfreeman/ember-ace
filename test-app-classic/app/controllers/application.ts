@@ -4,26 +4,30 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class ApplicationController extends Controller {
-  @tracked value = 'console.log("hello");\n\n// Intentional syntax error\n2 +';
+  @tracked public value =
+    'console.log("hello");\n\n// Intentional syntax error\n2 +';
 
-  @tracked highlightActiveLine = true;
-  @tracked showPrintMargin = true;
-  @tracked readOnly = false;
+  @tracked public highlightActiveLine = true;
+  @tracked public showPrintMargin = true;
+  @tracked public readOnly = false;
 
-  @tracked tabSize = 2;
-  @tracked useSoftTabs = true;
-  @tracked wrap = true;
-  @tracked showInvisibles = false;
-  @tracked showGutter = true;
+  @tracked public tabSize = 2;
+  @tracked public useSoftTabs = true;
+  @tracked public wrap = true;
+  @tracked public showInvisibles = false;
+  @tracked public showGutter = true;
 
-  @tracked theme = 'ace/theme/textmate';
-  @tracked themes = [
+  @tracked public theme = 'ace/theme/textmate';
+  @tracked public themes = [
     'ace/theme/textmate',
     'ace/theme/ambiance',
     'ace/theme/chaos',
   ];
 
-  @action syncInputValue<K extends keyof this>(key: K, { target }: InputEvent) {
+  @action public syncInputValue<K extends keyof this>(
+    key: K,
+    { target }: InputEvent
+  ): void {
     assert(
       'Should be an input of some kind',
       target instanceof HTMLInputElement || target instanceof HTMLSelectElement

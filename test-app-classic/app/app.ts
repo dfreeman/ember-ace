@@ -6,9 +6,9 @@ import config from 'test-app-classic/config/environment';
 import './ace-config';
 
 export default class App extends Application {
-  modulePrefix = config.modulePrefix;
-  podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  public modulePrefix = config.modulePrefix;
+  public podModulePrefix = config.podModulePrefix;
+  public Resolver = Resolver;
 }
 
 loadInitializers(App, config.modulePrefix);

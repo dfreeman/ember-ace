@@ -7,13 +7,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { Component } from 'ember-cli-page-object/-private';
 import { Ace, Range } from 'ace-builds';
 import { tracked } from '@glimmer/tracking';
-
-// `ember-sinon` and `@types/sinon` disagree on this
-const sinon = require('sinon').default as typeof import('sinon');
+import sinon from 'sinon';
 
 class State {
-  @tracked value = '';
-  @tracked options: Partial<Ace.EditorOptions> = {
+  @tracked public value = '';
+  @tracked public options: Partial<Ace.EditorOptions> = {
     minLines: 1,
     maxLines: 10,
   };
