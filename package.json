@@ -5,8 +5,7 @@
     "build": "yarn workspace ember-ace build",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "yarn workspace ember-ace start",
-    "start:test:classic": "yarn workspace test-app-classic run start",
-    "//start:test:embroider": "yarn workspace test-app-embroider run start",
+    "start:test": "yarn workspace test-app run start",
     "lint": "yarn workspaces run lint",
     "lint:fix": "yarn workspaces run lint:fix",
     "test": "yarn workspaces run test"
@@ -21,7 +20,7 @@
   },
   "workspaces": [
     "ember-ace",
-    "test-app-classic"
+    "test-app"
   ],
   "volta": {
     "node": "14.20.0"

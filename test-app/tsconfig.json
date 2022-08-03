@@ -8,8 +8,8 @@
     // work with TypeScript.
     "baseUrl": ".",
     "paths": {
-      "test-app-classic/tests/*": ["tests/*"],
-      "test-app-classic/*": ["app/*"]
+      "test-app/tests/*": ["tests/*"],
+      "test-app/*": ["app/*"]
     }
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]

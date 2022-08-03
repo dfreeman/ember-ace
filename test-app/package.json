@@ -1,5 +1,7 @@
 {
-  "name": "test-app-classic",
+  "name": "test-app",
+  "license": "MIT",
+  "author": "Dan Freeman",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -20,14 +22,13 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
-    "@embroider/test-setup": "^1.2.0",
+    "@embroider/test-setup": "^1.8.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember": "^4.0.0",
     "@types/ember-qunit": "^5.0.0",
     "@types/ember-resolver": "^5.0.11",
-    "@types/ember__destroyable": "^4.0.0",
     "@types/jquery": "^3.5.14",
     "@types/sinon": "^10.0.13",
     "ace-builds": "^1.8.1",
@@ -60,8 +61,6 @@
     "typescript": "^4.7.4",
     "webpack": "^5.69.1"
   },
-  "license": "MIT",
-  "author": "Dan Freeman",
   "ember": {
     "edition": "octane"
   },
