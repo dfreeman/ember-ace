@@ -5,6 +5,7 @@ import marker from './ember-ace/marker';
 import annotation from './ember-ace/annotation';
 import autocomplete from './ember-ace/autocomplete';
 import { getter } from 'ember-cli-page-object/macros';
+import { settled } from '@ember/test-helpers';
 
 export default {
   /**
@@ -23,6 +24,7 @@ export default {
   setValue: editorInteraction((editor, value: string) => {
     editor.setValue(value, 1);
     editor.renderer.updateFull(true);
+    return settled();
   }),
 
   /**

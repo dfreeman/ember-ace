@@ -64,7 +64,7 @@ module('Integration | Component | <AceEditor />', function (hooks) {
       <AceEditor @options={{this.state.options}} @update={{this.change}} />
     `);
 
-    this.component.setValue('hello');
+    await this.component.setValue('hello');
 
     assert.ok(this.change.calledWith('hello'));
     assert.strictEqual(this.change.callCount, 1);
@@ -72,15 +72,19 @@ module('Integration | Component | <AceEditor />', function (hooks) {
   });
 
   test('internal value updates with initial value', async function (this: AceTestContext, assert) {
+    this.state.value = 'one';
+
     await render<AceTestContext>(hbs`
-      <AceEditor @options={{this.state.options}} @update={{this.change}} />
+      <AceEditor @options={{this.state.options}} @value={{this.state.value}} @update={{this.change}} />
     `);
 
-    this.component.setValue('two');
+    assert.strictEqual(this.change.callCount, 0);
+
+    await this.component.setValue('two');
     assert.strictEqual(this.change.callCount, 1);
     assert.strictEqual(this.component.value, 'two');
 
-    this.component.setValue('');
+    await this.component.setValue('');
     assert.strictEqual(this.change.callCount, 2);
     assert.strictEqual(this.component.value, '');
   });
