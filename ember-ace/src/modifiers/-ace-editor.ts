@@ -1,5 +1,5 @@
 import { type Ace, edit } from 'ace-builds';
-import { schedule } from '@ember/runloop';
+import { schedule, once } from '@ember/runloop';
 import Modifier, { ArgsFor } from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
 
@@ -33,7 +33,7 @@ export default class AceEditor extends Modifier<AceEditorSignature> {
 
   public override modify(
     element: HTMLPreElement,
-    positional: [],
+    _positional: [],
     newArgs: AceEditorArgs
   ): void {
     if (this.state === undefined) {
@@ -54,11 +54,15 @@ export default class AceEditor extends Modifier<AceEditorSignature> {
 
     editor.session.on('change', () => {
       if (!this.silenceUpdates) {
-        this.state?.args.update?.(editor.getValue());
+        once(this, this.notifyUpdate, editor);
       }
     });
 
     args.ready?.(editor);
+  }
+
+  private notifyUpdate(editor: Ace.Editor): void {
+    this.state?.args.update?.(editor.getValue());
   }
 
   private updateEditor(editor: Ace.Editor, args: AceEditorArgs): void {
