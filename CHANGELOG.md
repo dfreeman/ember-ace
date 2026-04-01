@@ -1,3 +1,7 @@
+## 3.0.2 (April 2, 2026)
+
+Fixes a bad publish in 3.0.1.
+
 ## 3.0.1 (April 1, 2026)
 
 This release fixes double-triggering of `update` calls when interacting

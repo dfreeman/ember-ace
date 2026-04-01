@@ -1,6 +1,6 @@
 {
   "name": "ember-ace",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "An Ember addon for the Ace code editor",
   "engines": {
     "node": "14.* || >= 16"
