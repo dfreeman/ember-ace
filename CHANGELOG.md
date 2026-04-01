@@ -1,3 +1,12 @@
+## 3.0.1 (April 1, 2026)
+
+This release fixes double-triggering of `update` calls when interacting
+programmatically with the Ace editor API.
+
+It also fixes `setValue` on the page object mistakenly returning `void`
+rather than the standard `settled` promise that page-interacting methods
+generally return.
+
 ## 3.0.0 (August 3, 2022)
 
 This release is a fairly significant overhaul of the package, simplifying the Ember-specific bits and more directly exposing Ace itself.
