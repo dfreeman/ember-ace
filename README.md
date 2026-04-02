@@ -67,7 +67,31 @@ While the paths aren't identical, generally you can map from the on-disk path `a
 
 Some editor modes include background workers that can perform more expensive processing to provide a richer editing experience. Since these modules are always loaded in a background worker, you can't include them directly in your build. Instead, you need to make them available to load at runtime and tell Ace where to find them.
 
-The easiest way to do this is by asking Webpack to treat those modules as external resources, meaning the bundler will include them as standalone files in your build output and provide you with a URL for those those files when you attempt to import them.
+The easiest way to do this is by asking the bundler to treat those modules as external resources, meaning they'll be included as standalone files in your build output and you'll receive the resulting URL for those files when you import them.
+
+```ts
+import { config } from 'ace-builds';
+import jsWorkerUrl from 'ace-builds/src-noconflict/worker-javascript?url';
+
+config.setModuleUrl('ace/mode/javascript_worker', jsWorkerUrl);
+```
+
+For TypeScript use, you can put the following in a `.d.ts` file in your project to ensure the worker URL imports are treated correctly:
+
+```ts
+declare module '*?url' {
+  const url: string;
+  export default url;
+}
+```
+
+#### Vite
+
+In Vite, the `?url` suffix will automatically [opt into treating the target file as an external resource](https://vite.dev/guide/assets#explicit-url-imports).
+
+#### Webpack
+
+In Webpack (via `ember-auto-import` or `@embroider/compat`), this behaviour must be configured.
 
 ```js
 // ember-cli-build.js
@@ -76,9 +100,9 @@ let app = new EmberApp(defaults, {
     webpack: {
       module: {
         rules: [
-          // Treat imports with `?resource` as external resources
+          // Treat imports with `?url` as external resources
           {
-            resourceQuery: /resource/,
+            resourceQuery: /url/,
             type: 'asset/resource',
           },
         ],
@@ -86,22 +110,6 @@ let app = new EmberApp(defaults, {
     },
   },
 });
-```
-
-```ts
-import { config } from 'ace-builds';
-import jsWorkerUrl from 'ace-builds/src-noconflict/worker-javascript?resource';
-
-config.setModuleUrl('ace/mode/javascript_worker', jsWorkerUrl);
-```
-
-For TypeScript use, you can put the following in a `.d.ts` file in your project to ensure the worker URL imports are treated correctly:
-
-```ts
-declare module '*?resource' {
-  const url: string;
-  export default url;
-}
 ```
 
 See the Webpack documentation on [asset modules](https://webpack.js.org/guides/asset-modules/) for more details and configuration options.

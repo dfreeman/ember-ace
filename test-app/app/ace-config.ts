@@ -12,6 +12,6 @@ import 'ace-builds/src-noconflict/theme-chaos';
 import 'ace-builds/src-noconflict/mode-javascript';
 
 // Load the JS worker's URL and tell Ace where to find it.
-import jsWorker from 'ace-builds/src-noconflict/worker-javascript?resource';
+import jsWorker from 'ace-builds/src-noconflict/worker-javascript?url';
 
 config.setModuleUrl('ace/mode/javascript_worker', jsWorker);

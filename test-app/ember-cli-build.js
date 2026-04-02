@@ -9,7 +9,7 @@ module.exports = function (defaults) {
         module: {
           rules: [
             {
-              resourceQuery: /resource/,
+              resourceQuery: /url/,
               type: 'asset/resource',
             },
           ],
