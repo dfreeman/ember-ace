@@ -34,7 +34,7 @@
     "@types/sinon": "^10.0.13",
     "ace-builds": "^1.8.1",
     "ember-ace": "*",
-    "ember-auto-import": "^2.4.0",
+    "ember-auto-import": "^2.13.1",
     "ember-cli": "~4.2.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-dependency-checker": "^3.2.0",
