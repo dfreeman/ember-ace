@@ -5,7 +5,8 @@ import marker from './ember-ace/marker';
 import annotation from './ember-ace/annotation';
 import autocomplete from './ember-ace/autocomplete';
 import { getter } from 'ember-cli-page-object/macros';
-import { settled } from '@ember/test-helpers';
+import { settled, waitUntil } from '@ember/test-helpers';
+import { Options } from '@ember/test-helpers/wait-until';
 
 export default {
   /**
@@ -43,6 +44,32 @@ export default {
    * The autocomplete dropdown box.
    */
   autocomplete,
+
+  /**
+   * Annotations can be added asynchronously by Ace workers or by the component in response to editor events.
+   * Use this method to wait for annotations to be added to the editor before making assertions about them.
+   *
+   * @param expected Optional number of annotations to wait for. If not provided, waits for at least one annotation.
+   * @returns A promise that resolves when the expected annotations are present.
+   * @throws Will throw an error if the expected annotations are not present within the timeout period.
+   */
+  async waitForAnnotations(
+    expected?: number,
+    options?: Options
+  ): Promise<void> {
+    let timeout = options?.timeout ?? 600;
+    let timeoutMessage =
+      options?.timeoutMessage ??
+      `Expected ${expected ? expected : '> 1'} annotation(s)`;
+
+    await waitUntil(
+      () =>
+        expected
+          ? this.annotations.length === expected
+          : this.annotations.length > 0,
+      { timeout, timeoutMessage }
+    );
+  },
 
   /**
    * A collection of line gutter annotations.
