@@ -1,6 +1,7 @@
 import { getter } from 'ember-cli-page-object/macros';
 import { findElementWithAssert } from 'ember-cli-page-object/extend';
 import { Component } from 'ember-cli-page-object/-private';
+import editorInteraction from '../../helpers/editor-interaction';
 
 export default {
   /**
@@ -18,4 +19,14 @@ export default {
     let el = findElementWithAssert(this)[0]!;
     return [...el.parentElement!.children].indexOf(el);
   }),
+
+  /**
+   * The text content of this annotation.
+   */
+  text: getter(
+    editorInteraction(function (this: Component<{ row: number }>, editor) {
+      let annotation = editor.session.getAnnotations()[this.row];
+      return annotation ? annotation.text : null;
+    })
+  ),
 };

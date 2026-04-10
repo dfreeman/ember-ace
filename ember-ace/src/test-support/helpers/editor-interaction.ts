@@ -13,10 +13,10 @@ export default function editorInteraction<Args extends Array<unknown>, T>(
   ) => T
 ): (this: Component<any>, ...args: Args) => T {
   return function (...args) {
-    const $pre = findElementWithAssert(this, 'pre')[0] as unknown as {
+    const pre = findElementWithAssert(this)[0]?.closest('pre') as unknown as {
       env: { editor: EditorWithPrivateStuff };
     };
 
-    return callback.call(this as never, $pre.env.editor, ...args);
+    return callback.call(this as never, pre.env.editor, ...args);
   };
 }

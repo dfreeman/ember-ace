@@ -141,15 +141,11 @@ module('Integration | Component | <AceEditor />', function (hooks) {
       false
     );
 
-    await waitUntil(
-      () =>
-        this.component.annotations.length === 1 &&
-        this.component.backMarkers.length === 1 &&
-        this.component.frontMarkers.length === 1
-    );
+    await this.component.waitForAnnotations();
 
     assert.strictEqual(this.component.annotations[0]?.type, 'error');
     assert.strictEqual(this.component.annotations[0]?.row, 0);
+    assert.strictEqual(this.component.annotations[0]?.text, 'Uh oh');
     assert.strictEqual(this.component.backMarkers[0]?.type, 'cool-back-thing');
     assert.strictEqual(
       this.component.frontMarkers[0]?.type,

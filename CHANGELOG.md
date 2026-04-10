@@ -1,3 +1,8 @@
+## 3.1.0 (April 10, 2026)
+
+This release improves page-object support for interacting with annotations.
+See [#78](https://github.com/dfreeman/ember-ace/pull/78)
+
 ## 3.0.2 (April 2, 2026)
 
 Fixes a bad publish in 3.0.1.
