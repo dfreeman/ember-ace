@@ -37,6 +37,10 @@
       ]
     }
   },
+  "files": [
+    "addon-main.js",
+    "dist/**/*"
+  ],
   "dependencies": {
     "@embroider/addon-shim": "^1.8.3",
     "ember-modifier": "^3.2.7"
