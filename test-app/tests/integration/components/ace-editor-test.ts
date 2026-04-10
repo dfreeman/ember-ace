@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, TestContext, waitUntil } from '@ember/test-helpers';
 import { create } from 'ember-cli-page-object';
-import aceComponent from 'ember-ace/test-support/components/ember-ace';
+import aceComponent from 'ember-ace/test-support/components/ace-editor';
 import { hbs } from 'ember-cli-htmlbars';
 import { Component } from 'ember-cli-page-object/-private';
 import { Ace, Range } from 'ace-builds';
@@ -127,7 +127,10 @@ module('Integration | Component | <AceEditor />', function (hooks) {
       <AceEditor @options={{this.state.options}} @ready={{this.ready}} @value={{this.state.value}} />
     `);
 
-    editor.session.setAnnotations([{ type: 'error', text: 'Uh oh', row: 0 }]);
+    editor.session.setAnnotations([
+      { type: 'error', text: 'Uh oh', row: 0 },
+      { type: 'warning', text: 'Careful', row: 1 },
+    ]);
     editor.session.addMarker(
       new Range(0, 1, 1, 1),
       'neat-front-thing',
@@ -143,13 +146,22 @@ module('Integration | Component | <AceEditor />', function (hooks) {
 
     await this.component.waitForAnnotations();
 
+    assert.strictEqual(this.component.annotations.length, 2);
     assert.strictEqual(this.component.annotations[0]?.type, 'error');
     assert.strictEqual(this.component.annotations[0]?.row, 0);
     assert.strictEqual(this.component.annotations[0]?.text, 'Uh oh');
-    assert.strictEqual(this.component.backMarkers[0]?.type, 'cool-back-thing');
-    assert.strictEqual(
-      this.component.frontMarkers[0]?.type,
-      'neat-front-thing'
+    assert.strictEqual(this.component.annotations[1]?.type, 'warning');
+    assert.strictEqual(this.component.annotations[1]?.row, 1);
+    assert.strictEqual(this.component.annotations[1]?.text, 'Careful');
+    assert.ok(
+      this.component.backMarkers.some(
+        (marker) => marker.clazz === 'cool-back-thing'
+      )
+    );
+    assert.ok(
+      this.component.frontMarkers.some(
+        (marker) => marker.clazz === 'neat-front-thing'
+      )
     );
   });
 

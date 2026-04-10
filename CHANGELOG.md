@@ -1,3 +1,12 @@
+## 4.0.0 (April 10, 2026)
+
+This is only a breaking change to the page-object API. It reworks the `annotations`
+and `markers` fields to interact directly with Ace rather than attempting to
+reconstruct them from the DOM, which can be error-prone.
+
+It also drops the previous `test-support/ember-ace` import path for the page object,
+leaving only `test-support/ace-editor`.
+
 ## 3.1.1 (April 10, 2026)
 
 Makes the `editorInteraction` page object helper slightly more robust.

@@ -1,12 +1,12 @@
 import { collection } from 'ember-cli-page-object';
 import editorInteraction from '../helpers/editor-interaction';
-import line from './ember-ace/line';
-import marker from './ember-ace/marker';
-import annotation from './ember-ace/annotation';
-import autocomplete from './ember-ace/autocomplete';
+import line from './ace-editor/line';
+import autocomplete from './ace-editor/autocomplete';
 import { getter } from 'ember-cli-page-object/macros';
 import { settled, waitUntil } from '@ember/test-helpers';
 import { Options } from '@ember/test-helpers/wait-until';
+import { A } from '@ember/array';
+import { Ace } from 'ace-builds';
 
 export default {
   /**
@@ -54,6 +54,7 @@ export default {
    * @throws Will throw an error if the expected annotations are not present within the timeout period.
    */
   async waitForAnnotations(
+    this: { annotations: Array<Ace.Annotation> },
     expected?: number,
     options?: Options
   ): Promise<void> {
@@ -74,18 +75,25 @@ export default {
   /**
    * A collection of line gutter annotations.
    */
-  annotations: collection('.ace_gutter-cell:not([class$=" "])', annotation),
+  annotations: getter(
+    editorInteraction((editor) => A(editor.session.getAnnotations()))
+  ),
 
   /**
    * A collection of markers overlaying text.
    */
-  frontMarkers: collection('.ace_layer:nth-child(4) .ace_start', marker),
+  frontMarkers: getter(
+    editorInteraction((editor) =>
+      A(Object.values(editor.session.getMarkers(true)))
+    )
+  ),
 
   /**
    * A collection of markers underlaying text.
    */
-  backMarkers: collection(
-    '.ace_layer:nth-child(2) .ace_start:not(.ace_selection)',
-    marker
+  backMarkers: getter(
+    editorInteraction((editor) =>
+      A(Object.values(editor.session.getMarkers(false)))
+    )
   ),
 };
