@@ -13,9 +13,11 @@ export default function editorInteraction<Args extends Array<unknown>, T>(
   ) => T
 ): (this: Component<any>, ...args: Args) => T {
   return function (...args) {
-    const pre = findElementWithAssert(this)[0]?.closest('pre') as unknown as {
-      env: { editor: EditorWithPrivateStuff };
-    };
+    let el = findElementWithAssert(this)[0];
+    let pre = (el?.closest('pre') ?? el?.querySelector('pre')) as any;
+    if (!pre?.env?.editor) {
+      throw new Error('Could not locate root Ace editor element');
+    }
 
     return callback.call(this as never, pre.env.editor, ...args);
   };

@@ -1,3 +1,7 @@
+## 3.1.1 (April 10, 2026)
+
+Makes the `editorInteraction` page object helper slightly more robust.
+
 ## 3.1.0 (April 10, 2026)
 
 This release improves page-object support for interacting with annotations.
